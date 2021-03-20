@@ -30,5 +30,4 @@ jobs:
         with: 
           azcliversion: 2.20.0
           inlineScript: |
-            az bicep install --version v0.3.1 
-            az bicep build --files arm-templates/main.bicep
+            az deployment sub create -f ./arm-templates/main.bicep -l northcentralus
