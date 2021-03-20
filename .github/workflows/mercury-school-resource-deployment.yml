@@ -30,4 +30,4 @@ jobs:
         with: 
           azcliversion: 2.20.0
           inlineScript: |
-            az bicep build --files ./arm-templates/main.bicep
+            az bicep build --files arm-templates/main.bicep
