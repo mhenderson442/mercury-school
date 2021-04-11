@@ -333,3 +333,11 @@ ASALocalRun/
 # Local History for Visual Studio
 .localhistory/
 workspace.code-workspace
+.vscode/tasks.json
+.vscode/settings.json
+.vscode/launch.json
+src/MercurySchool.Functions/.vscode/extensions.json
+src/MercurySchool.Functions/.vscode/launch.json
+src/MercurySchool.Functions/.vscode/settings.json
+src/MercurySchool.Functions/.vscode/tasks.json
+src/MercurySchool.Functions/local.settings.json
