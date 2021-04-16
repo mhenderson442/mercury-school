@@ -38,6 +38,13 @@ namespace MercurySchool.Functions.Repositories
         Task<List<Person>> InsertPersons(Queue<Person> persons);
 
         /// <summary>
+        /// Update persons from an instance of an Queue of type person.
+        /// </summary>
+        /// <param name="persons">Queue of type person</param>
+        /// <returns>List of type person</returns>
+        Task<List<Person>> UpdatePersons(Queue<Person> persons);
+
+        /// <summary>
         /// Update instance of person.
         /// </summary>
         /// <param name="person">Instance of Person</param>

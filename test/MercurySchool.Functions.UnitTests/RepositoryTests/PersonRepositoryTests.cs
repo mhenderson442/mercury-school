@@ -116,8 +116,38 @@ namespace MercurySchool.Functions.UnitTests.RepositoryTests
                 .And.HaveCount(x => x > 1, "because the GetPerson method should not return 1 rows.");
         }
 
+        [Fact]
+        public async Task UpdatePersonsReturnsList()
+        {
+            // Arrange
+            var person0 = new Person
+            {
+                Id = 27,
+                FirstName = "Unit",
+                MiddleName = "C",
+                LastName = Guid.NewGuid().ToString()
+            };
+
+            var person1 = new Person
+            {
+                Id = 28,
+                FirstName = "Unit",
+                MiddleName = "D",
+                LastName = Guid.NewGuid().ToString()
+            };
+
+            var persons = new Queue<Person>();
+            persons.Enqueue(person0);
+            persons.Enqueue(person1);
+
+            // Act
+            var sut = await PersonRepository.UpdatePersons(persons);
+
+            // Assert
+        }
+
         [Fact(DisplayName = "Update Person Should Return Person")]
-        public async Task UpdatePersonReturnsPerson()
+        public async Task UpdatePersonsReturnsPerson()
         {
             // Arrange
             var lastName = Guid.NewGuid().ToString();

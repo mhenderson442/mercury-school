@@ -54,59 +54,9 @@ namespace MercurySchool.Functions.Repositories
             };
         }
 
-        public async Task<List<Person>> InsertPersons(Queue<Person> persons)
-        {
-            var personToInsert = new DataTable("Persons");
-            var idColumn = personToInsert.Columns.Add("Id", typeof(int));
-            idColumn.AutoIncrement = true;
+        public async Task<List<Person>> InsertPersons(Queue<Person> persons) => await UpsertPersons(persons);
 
-            personToInsert.Columns.Add("FirstName", typeof(string));
-            personToInsert.Columns.Add("MiddleName", typeof(string));
-            personToInsert.Columns.Add("LastName", typeof(string));
-
-            while(persons.Count > 0){
-                var person = persons.Dequeue();
-
-                var row = personToInsert.NewRow();
-
-                row["FirstName"] = person.FirstName;
-                row["MiddleName"] = person.MiddleName;
-                row["LastName"] = person.LastName;
-
-                personToInsert.Rows.Add(row);
-            }
-
-            using var sqlConnection = new SqlConnection(_sqlConnectionString);
-            await sqlConnection.OpenAsync();
-
-            using var sqlCommand = sqlConnection.CreateCommand();
-
-            sqlCommand.CommandText = "func.InsertPersons";
-            sqlCommand.CommandType = CommandType.StoredProcedure;
-
-            var newPersons = sqlCommand.Parameters.AddWithValue("@Persons", personToInsert);
-            newPersons.SqlDbType = SqlDbType.Structured;
-            newPersons.TypeName = "func.Persons";
-
-            using var reader = await sqlCommand.ExecuteReaderAsync();
-
-            var insertedPersons = new List<Person>();
-
-            while (await reader.ReadAsync())
-            {
-                var person = new Person
-                {
-                    Id = (int)reader["id"],
-                    FirstName = reader["FirstName"] as string,
-                    MiddleName = reader["MiddleName"] as string,
-                    LastName = reader["LastName"] as string
-                };
-
-                insertedPersons.Add(person);
-            }
-
-            return insertedPersons;
-        }
+        public async Task<List<Person>> UpdatePersons(Queue<Person> persons) => await UpsertPersons(persons);
 
         public async Task<Person> UpdatePersons(Person person)
         {
@@ -152,10 +102,63 @@ namespace MercurySchool.Functions.Repositories
 
             return (int)deletedId;
         }
+
+        private async Task<List<Person>> UpsertPersons(Queue<Person> persons)
+        {
+            var cmdText = persons.Peek().Id is null ? "func.InsertPersons" : "func.UpdatePersons";
+            var personDataTable = new DataTable("Persons");
+            var idColumn = personDataTable.Columns.Add("Id", typeof(int));
+
+            personDataTable.Columns.Add("FirstName", typeof(string));
+            personDataTable.Columns.Add("MiddleName", typeof(string));
+            personDataTable.Columns.Add("LastName", typeof(string));
+
+            while (persons.Count > 0)
+            {
+                var person = persons.Dequeue();
+                var row = personDataTable.NewRow();
+
+                row["FirstName"] = person.FirstName;
+                row["MiddleName"] = person.MiddleName;
+                row["LastName"] = person.LastName;
+
+                personDataTable.Rows.Add(row);
+            }
+
+            using var sqlConnection = new SqlConnection(_sqlConnectionString);
+            await sqlConnection.OpenAsync();
+
+            using var sqlCommand = sqlConnection.CreateCommand();
+
+            sqlCommand.CommandText = cmdText;
+            sqlCommand.CommandType = CommandType.StoredProcedure;
+
+            var newPersons = sqlCommand.Parameters.AddWithValue("@Persons", personDataTable);
+            newPersons.SqlDbType = SqlDbType.Structured;
+            newPersons.TypeName = "func.Persons";
+
+            using var reader = await sqlCommand.ExecuteReaderAsync();
+
+            var upsertedPersons = new List<Person>();
+
+            while (await reader.ReadAsync())
+            {
+                var person = new Person
+                {
+                    Id = (int)reader["id"],
+                    FirstName = reader["FirstName"] as string,
+                    MiddleName = reader["MiddleName"] as string,
+                    LastName = reader["LastName"] as string
+                };
+
+                upsertedPersons.Add(person);
+            }
+
+            return upsertedPersons;
+        }
         
         private async Task<List<Person>> GetPersons(SqlPagination sqlPagination, int? id)
         {
-
             var persons = new List<Person>();
 
             using var sqlConnection = new SqlConnection(_sqlConnectionString);
