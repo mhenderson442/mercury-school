@@ -21,41 +21,41 @@ namespace MercurySchool.Functions.Repositories
         /// </summary>
         /// <param name="id">Primary key of person.</param>
         /// <returns>An instance of Person</returns>
-        Task<Person> GetPersons(int id);
+        Task<Person> GetPersonsAsync(int id);
 
         /// <summary>
         /// Insert instance of person.
         /// </summary>
         /// <param name="person">Instance of Person</param>
         /// <returns>Instance of Person</returns>
-        Task<Person> InsertPersons(Person person);
+        Task<Person> InsertPersonsAsync(Person person);
 
         /// <summary>
         /// Insert persons from an instance of an Queue of type person.
         /// </summary>
         /// <param name="person">Queue of type person</param>
         /// <returns>List of type person</returns>
-        Task<List<Person>> InsertPersons(Queue<Person> persons);
+        Task<List<Person>> InsertPersonsAsync(Queue<Person> persons);
 
         /// <summary>
         /// Update persons from an instance of an Queue of type person.
         /// </summary>
         /// <param name="persons">Queue of type person</param>
         /// <returns>List of type person</returns>
-        Task<List<Person>> UpdatePersons(Queue<Person> persons);
+        Task<List<Person>> UpdatePersonsAsync(Queue<Person> persons);
 
         /// <summary>
         /// Update instance of person.
         /// </summary>
         /// <param name="person">Instance of Person</param>
         /// <returns>Instance of Person</returns>
-        Task<Person> UpdatePersons(Person person);
+        Task<Person> UpdatePersonsAsync(Person person);
 
         /// <summary>
         /// Delete person.
         /// </summary>
         /// <param name="id">Id of person to delete</param>
         /// <returns>Id of deleted person</returns>
-        Task<int> DeletePersons(int id);
+        Task<int> DeletePersonsAsync(int id);
     }
 }

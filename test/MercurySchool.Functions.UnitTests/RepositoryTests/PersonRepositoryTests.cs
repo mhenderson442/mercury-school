@@ -5,7 +5,6 @@ using FluentAssertions;
 using MercurySchool.Functions.Models;
 using MercurySchool.Functions.Repositories;
 using Microsoft.Extensions.Configuration;
-using Moq;
 using Xunit;
 
 namespace MercurySchool.Functions.UnitTests.RepositoryTests
@@ -14,19 +13,20 @@ namespace MercurySchool.Functions.UnitTests.RepositoryTests
     {
         private PersonRepository _personRepository;
 
-        public PersonRepositoryTests(){
-            
+        public PersonRepositoryTests()
+        {
+
             IConfiguration configuration = new ConfigurationBuilder()
                 .AddUserSecrets("c376b48b-8bd2-4d5d-a693-803ebafc9275")
                 .Build();
-        
+
             PersonRepository = new PersonRepository(configuration);
         }
 
-        public PersonRepository PersonRepository 
-        { 
-            get => _personRepository; 
-            set => _personRepository = value; 
+        public PersonRepository PersonRepository
+        {
+            get => _personRepository;
+            set => _personRepository = value;
         }
 
         [Theory(DisplayName = "GetPersons Should Return List")]
@@ -39,7 +39,7 @@ namespace MercurySchool.Functions.UnitTests.RepositoryTests
 
             // Act
             var sut = await PersonRepository.GetPersons(sqlPagination);
-            
+
             // Assert
             sut.Should()
                 .NotBeEmpty("because because the method should not return an empty list.")
@@ -54,7 +54,7 @@ namespace MercurySchool.Functions.UnitTests.RepositoryTests
             var id = 1;
 
             // Act
-            var sut = await PersonRepository.GetPersons(id);
+            var sut = await PersonRepository.GetPersonsAsync(id);
 
             // Assert
             sut.Should()
@@ -66,20 +66,21 @@ namespace MercurySchool.Functions.UnitTests.RepositoryTests
         public async Task InsertPersonsReturnsPerson()
         {
             // Arrange
-            var person = new Person{
+            var person = new Person
+            {
                 FirstName = "Unit",
                 MiddleName = "B",
                 LastName = "Test"
             };
 
             // Act
-            var sut = await PersonRepository.InsertPersons(person);
+            var sut = await PersonRepository.InsertPersonsAsync(person);
 
             // Assert
             sut.Should()
                 .NotBeNull("because an instance of person should be returned.")
                 .And.BeOfType<Person>("because an instance of person should be returned.");
-            
+
             sut.Id.Should()
                 .BeGreaterThan(0, "because returned instance of Person should have newly created Id.");
         }
@@ -107,7 +108,7 @@ namespace MercurySchool.Functions.UnitTests.RepositoryTests
             persons.Enqueue(person1);
 
             // Act
-            var sut = await PersonRepository.InsertPersons(persons);
+            var sut = await PersonRepository.InsertPersonsAsync(persons);
 
             // Assert
             sut.Should()
@@ -141,7 +142,7 @@ namespace MercurySchool.Functions.UnitTests.RepositoryTests
             persons.Enqueue(person1);
 
             // Act
-            var sut = await PersonRepository.UpdatePersons(persons);
+            var sut = await PersonRepository.UpdatePersonsAsync(persons);
 
             // Assert
         }
@@ -161,7 +162,7 @@ namespace MercurySchool.Functions.UnitTests.RepositoryTests
             };
 
             // Act
-            var sut = await PersonRepository.UpdatePersons(person);
+            var sut = await PersonRepository.UpdatePersonsAsync(person);
 
             // Assert
             sut.Should()
@@ -170,7 +171,7 @@ namespace MercurySchool.Functions.UnitTests.RepositoryTests
 
             sut.Id.Should()
                 .Be(3, "because returned instance of person should have an Id macthing what was submitted.");
-            
+
             sut.LastName.Should()
                 .Be(lastName, $"because LastName does not equal { lastName }");
         }
@@ -186,11 +187,11 @@ namespace MercurySchool.Functions.UnitTests.RepositoryTests
                 LastName = "PersonTest"
             };
 
-            var insertedPerson = await PersonRepository.InsertPersons(person);
+            var insertedPerson = await PersonRepository.InsertPersonsAsync(person);
             var id = (int)insertedPerson.Id;
 
             // Act
-            var sut = await PersonRepository.DeletePersons(id);
+            var sut = await PersonRepository.DeletePersonsAsync(id);
 
             // Asert
             sut.Should().Be(id, "because DeletePersons should return the id of the deleted person.");

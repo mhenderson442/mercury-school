@@ -18,17 +18,17 @@ namespace MercurySchool.Functions.Repositories
 
         public PersonRepository(IConfiguration configuration) => _sqlConnectionString = DataUtilities.GetSqlConnectionString(configuration);
 
-        public async Task<List<Person>> GetPersons(SqlPagination sqlPagination) => await GetPersons(sqlPagination, null);
+        public async Task<List<Person>> GetPersons(SqlPagination sqlPagination) => await GetPersonsAsync(sqlPagination, null);
 
-        public async Task<Person> GetPersons(int id)
+        public async Task<Person> GetPersonsAsync(int id)
         {
             var sqlPagination = new SqlPagination();
-            var persons = await GetPersons(sqlPagination, id);
+            var persons = await GetPersonsAsync(sqlPagination, id);
 
             return persons.FirstOrDefault();
         }
 
-        public async Task<Person> InsertPersons(Person person)
+        public async Task<Person> InsertPersonsAsync(Person person)
         {
             using var sqlConnection = new SqlConnection(_sqlConnectionString);
             await sqlConnection.OpenAsync();
@@ -54,11 +54,11 @@ namespace MercurySchool.Functions.Repositories
             };
         }
 
-        public async Task<List<Person>> InsertPersons(Queue<Person> persons) => await UpsertPersons(persons);
+        public async Task<List<Person>> InsertPersonsAsync(Queue<Person> persons) => await UpsertPersonsAsync(persons, true);
 
-        public async Task<List<Person>> UpdatePersons(Queue<Person> persons) => await UpsertPersons(persons);
+        public async Task<List<Person>> UpdatePersonsAsync(Queue<Person> persons) => await UpsertPersonsAsync(persons, false);
 
-        public async Task<Person> UpdatePersons(Person person)
+        public async Task<Person> UpdatePersonsAsync(Person person)
         {
             using var sqlConnection = new SqlConnection(_sqlConnectionString);
             await sqlConnection.OpenAsync();
@@ -86,7 +86,7 @@ namespace MercurySchool.Functions.Repositories
             };
         }
 
-        public async Task<int> DeletePersons(int id)
+        public async Task<int> DeletePersonsAsync(int id)
         {
             using var sqlConnection = new SqlConnection(_sqlConnectionString);
             await sqlConnection.OpenAsync();
@@ -103,15 +103,10 @@ namespace MercurySchool.Functions.Repositories
             return (int)deletedId;
         }
 
-        private async Task<List<Person>> UpsertPersons(Queue<Person> persons)
+        private async Task<List<Person>> UpsertPersonsAsync(Queue<Person> persons, bool isInsert)
         {
-            var cmdText = persons.Peek().Id is null ? "func.InsertPersons" : "func.UpdatePersons";
-            var personDataTable = new DataTable("Persons");
-            var idColumn = personDataTable.Columns.Add("Id", typeof(int));
-
-            personDataTable.Columns.Add("FirstName", typeof(string));
-            personDataTable.Columns.Add("MiddleName", typeof(string));
-            personDataTable.Columns.Add("LastName", typeof(string));
+            var cmdText = isInsert ? "func.InsertPersons" : "func.UpdatePersons";
+            var personDataTable = await GetPersonsDataTableAsync();
 
             while (persons.Count > 0)
             {
@@ -156,8 +151,22 @@ namespace MercurySchool.Functions.Repositories
 
             return upsertedPersons;
         }
+
+        private async Task<DataTable> GetPersonsDataTableAsync(){
+            
+            await Task.Yield();
+
+            var personDataTable = new DataTable("Persons");
+            var idColumn = personDataTable.Columns.Add("Id", typeof(int));
+
+            personDataTable.Columns.Add("FirstName", typeof(string));
+            personDataTable.Columns.Add("MiddleName", typeof(string));
+            personDataTable.Columns.Add("LastName", typeof(string));   
+                    
+            return personDataTable;
+        }
         
-        private async Task<List<Person>> GetPersons(SqlPagination sqlPagination, int? id)
+        private async Task<List<Person>> GetPersonsAsync(SqlPagination sqlPagination, int? id)
         {
             var persons = new List<Person>();
 
