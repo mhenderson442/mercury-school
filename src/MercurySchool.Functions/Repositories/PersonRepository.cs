@@ -38,20 +38,27 @@ namespace MercurySchool.Functions.Repositories
             sqlCommand.CommandText = "func.InsertPerson";
             sqlCommand.CommandType = CommandType.StoredProcedure;
 
-            sqlCommand.Parameters.AddWithValue("@FirstName", person.FirstName);
-            sqlCommand.Parameters.AddWithValue("@MiddleName", (object)person.MiddleName ?? DBNull.Value);
-            sqlCommand.Parameters.AddWithValue("@LastName", person.LastName);
+            _ = sqlCommand.Parameters.AddWithValue("@FirstName", person.FirstName);
+            _ = sqlCommand.Parameters.AddWithValue("@MiddleName", (object)person.MiddleName ?? DBNull.Value);
+            _ = sqlCommand.Parameters.AddWithValue("@LastName", person.LastName);
 
             using var reader = await sqlCommand.ExecuteReaderAsync();
-            await reader.ReadAsync();
 
-            return new Person
+            if (reader.HasRows)
             {
-                Id = (int?)reader["Id"],
-                FirstName = reader["FirstName"] as string,
-                MiddleName = reader["MiddleName"] as string,
-                LastName = reader["LastName"] as string
-            };
+                _ = await reader.ReadAsync();
+
+                return new Person
+                {
+                    Id = (int?)reader["Id"],
+                    FirstName = reader["FirstName"] as string,
+                    MiddleName = reader["MiddleName"] as string,
+                    LastName = reader["LastName"] as string
+                };
+            }
+
+            throw new ArgumentException($"PersonRepository.InsertPersons did not insert any rows.");
+
         }
 
         public async Task<List<Person>> InsertPersonsAsync(Queue<Person> persons) => await UpsertPersonsAsync(persons, true);
@@ -68,22 +75,27 @@ namespace MercurySchool.Functions.Repositories
             sqlCommand.CommandText = "func.UpdatePerson";
             sqlCommand.CommandType = CommandType.StoredProcedure;
 
-            sqlCommand.Parameters.AddWithValue("@Id", person.Id);
-            sqlCommand.Parameters.AddWithValue("@FirstName", person.FirstName);
-            sqlCommand.Parameters.AddWithValue("@MiddleName", (object)person.MiddleName ?? DBNull.Value);
-            sqlCommand.Parameters.AddWithValue("@LastName", person.LastName);
+            _ = sqlCommand.Parameters.AddWithValue("@Id", person.Id);
+            _ = sqlCommand.Parameters.AddWithValue("@FirstName", person.FirstName);
+            _ = sqlCommand.Parameters.AddWithValue("@MiddleName", (object)person.MiddleName ?? DBNull.Value);
+            _ = sqlCommand.Parameters.AddWithValue("@LastName", person.LastName);
 
             using var reader = await sqlCommand.ExecuteReaderAsync();
 
-            await reader.ReadAsync();
-
-            return new Person
+            if (reader.HasRows)
             {
-                Id = (int?)reader["Id"],
-                FirstName = reader["FirstName"] as string,
-                MiddleName = reader["MiddleName"] as string,
-                LastName = reader["LastName"] as string
-            };
+                _ = await reader.ReadAsync();
+
+                return new Person
+                {
+                    Id = (int?)reader["Id"],
+                    FirstName = reader["FirstName"] as string,
+                    MiddleName = reader["MiddleName"] as string,
+                    LastName = reader["LastName"] as string
+                };
+            }
+
+            throw new ArgumentException($"PersonRepository.UpdatePersonsAsync did not update any rows.");
         }
 
         public async Task<int> DeletePersonsAsync(int id)
@@ -96,11 +108,16 @@ namespace MercurySchool.Functions.Repositories
             sqlCommand.CommandText = "func.DeletePerson";
             sqlCommand.CommandType = CommandType.StoredProcedure;
 
-            sqlCommand.Parameters.AddWithValue("@Id", id);
+            _ = sqlCommand.Parameters.AddWithValue("@Id", id);
 
-            var deletedId = await sqlCommand.ExecuteScalarAsync();
+            var deletedId = (int)await sqlCommand.ExecuteScalarAsync();
 
-            return (int)deletedId;
+            if (deletedId > 0)
+            {
+                return deletedId;
+            }
+
+            throw new ArgumentException($"PersonRepository.DeletePersonsAsync did not update any rows.");
         }
 
         private async Task<List<Person>> UpsertPersonsAsync(Queue<Person> persons, bool isInsert)
@@ -113,6 +130,7 @@ namespace MercurySchool.Functions.Repositories
                 var person = persons.Dequeue();
                 var row = personDataTable.NewRow();
 
+                row["Id"] = person.Id;
                 row["FirstName"] = person.FirstName;
                 row["MiddleName"] = person.MiddleName;
                 row["LastName"] = person.LastName;
@@ -134,38 +152,44 @@ namespace MercurySchool.Functions.Repositories
 
             using var reader = await sqlCommand.ExecuteReaderAsync();
 
-            var upsertedPersons = new List<Person>();
-
-            while (await reader.ReadAsync())
+            if (reader.HasRows)
             {
-                var person = new Person
-                {
-                    Id = (int)reader["id"],
-                    FirstName = reader["FirstName"] as string,
-                    MiddleName = reader["MiddleName"] as string,
-                    LastName = reader["LastName"] as string
-                };
+                var upsertedPersons = new List<Person>();
 
-                upsertedPersons.Add(person);
+                while (await reader.ReadAsync())
+                {
+                    var person = new Person
+                    {
+                        Id = (int)reader["id"],
+                        FirstName = reader["FirstName"] as string,
+                        MiddleName = reader["MiddleName"] as string,
+                        LastName = reader["LastName"] as string
+                    };
+
+                    upsertedPersons.Add(person);
+                }
+
+                return upsertedPersons;
             }
 
-            return upsertedPersons;
+            var methodName = isInsert ? "InsertPersons" : "UpatePersons";
+            throw new ArgumentException($"PersonRepository.{methodName} did not return any rows.");
         }
 
-        private async Task<DataTable> GetPersonsDataTableAsync(){
-            
+        private static async Task<DataTable> GetPersonsDataTableAsync()
+        {
             await Task.Yield();
 
             var personDataTable = new DataTable("Persons");
-            var idColumn = personDataTable.Columns.Add("Id", typeof(int));
 
-            personDataTable.Columns.Add("FirstName", typeof(string));
-            personDataTable.Columns.Add("MiddleName", typeof(string));
-            personDataTable.Columns.Add("LastName", typeof(string));   
-                    
+            _ = personDataTable.Columns.Add("Id", typeof(int));
+            _ = personDataTable.Columns.Add("FirstName", typeof(string));
+            _ = personDataTable.Columns.Add("MiddleName", typeof(string));
+            _ = personDataTable.Columns.Add("LastName", typeof(string));
+
             return personDataTable;
         }
-        
+
         private async Task<List<Person>> GetPersonsAsync(SqlPagination sqlPagination, int? id)
         {
             var persons = new List<Person>();
@@ -178,28 +202,28 @@ namespace MercurySchool.Functions.Repositories
             sqlCommand.CommandText = "func.GetPersons";
             sqlCommand.CommandType = CommandType.StoredProcedure;
 
-            sqlCommand.Parameters.AddWithValue("@Id", (object)id ?? DBNull.Value);
-            sqlCommand.Parameters.AddWithValue("@Offset", sqlPagination.Offset);
-            sqlCommand.Parameters.AddWithValue("@Fetch", sqlPagination.Fetch);
+            _ = sqlCommand.Parameters.AddWithValue("@Id", (object)id ?? DBNull.Value);
+            _ = sqlCommand.Parameters.AddWithValue("@Offset", sqlPagination.Offset);
+            _ = sqlCommand.Parameters.AddWithValue("@Fetch", sqlPagination.Fetch);
 
             using var reader = await sqlCommand.ExecuteReaderAsync();
 
-            if (!reader.HasRows)
+            if (reader.HasRows)
             {
-                return persons;
-            }
-
-            while (await reader.ReadAsync())
-            {
-                var person = new Person
+                while (await reader.ReadAsync())
                 {
-                    Id = (int)reader["id"],
-                    FirstName = reader["FirstName"] as string,
-                    MiddleName = reader["MiddleName"] as string,
-                    LastName = reader["LastName"] as string
-                };
+                    var person = new Person
+                    {
+                        Id = (int)reader["id"],
+                        FirstName = reader["FirstName"] as string,
+                        MiddleName = reader["MiddleName"] as string,
+                        LastName = reader["LastName"] as string
+                    };
 
-                persons.Add(person);
+                    persons.Add(person);
+                }
+
+                return persons;
             }
 
             return persons;

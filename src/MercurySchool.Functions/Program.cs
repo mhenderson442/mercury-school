@@ -1,7 +1,5 @@
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Azure.Functions.Worker.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MercurySchool.Functions.Repositories;
 
@@ -15,17 +13,17 @@ namespace MercurySchool.Functions
                 .ConfigureFunctionsWorkerDefaults()
                 .ConfigureAppConfiguration((hostContext, configApp) =>
                 {
-                    configApp.AddJsonFile("appsettings.json", true);
-                    configApp.AddJsonFile($"appsettings.{ hostContext.HostingEnvironment.EnvironmentName }.json");
-                    configApp.AddEnvironmentVariables();
+                    _ = configApp.AddJsonFile("appsettings.json", true);
+                    _ = configApp.AddJsonFile($"appsettings.{ hostContext.HostingEnvironment.EnvironmentName }.json");
+                    _ = configApp.AddEnvironmentVariables();
 
                     if(hostContext.HostingEnvironment.IsDevelopment()){
-                        configApp.AddUserSecrets<Program>();
+                        _ = configApp.AddUserSecrets<Program>();
                     }
                 })
                 .ConfigureServices(sevices =>
                 {
-                    sevices.AddScoped<IPersonRepository, PersonRepository>();
+                    _ = sevices.AddScoped<IPersonRepository, PersonRepository>();
                 })
                 .Build();
 

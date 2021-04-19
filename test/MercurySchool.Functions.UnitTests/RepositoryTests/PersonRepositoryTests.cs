@@ -42,9 +42,9 @@ namespace MercurySchool.Functions.UnitTests.RepositoryTests
 
             // Assert
             sut.Should()
-                .NotBeEmpty("because because the method should not return an empty list.")
-                .And.ContainItemsAssignableTo<Person>("because the list returned should be a list of type person.")
-                .And.HaveCount(x => x > 1, "because the GetPerson method should not return 1 rows.");
+                .NotBeEmpty("because because the method should not return an empty list")
+                .And.ContainItemsAssignableTo<Person>("because the list returned should be a list of type person")
+                .And.HaveCount(x => x > 1, "because the GetPerson method should not return 1 rows");
         }
 
         [Fact(DisplayName = "Get Persons Should Return Person")]
@@ -59,7 +59,7 @@ namespace MercurySchool.Functions.UnitTests.RepositoryTests
             // Assert
             sut.Should()
                 .NotBeNull("because the id passed should return a person")
-                .And.BeOfType<Person>("becuase the object return should be an instance of a person.");
+                .And.BeOfType<Person>("becuase the object return should be an instance of a person");
         }
 
         [Fact(DisplayName = "Insert Person Should Return Person")]
@@ -78,11 +78,11 @@ namespace MercurySchool.Functions.UnitTests.RepositoryTests
 
             // Assert
             sut.Should()
-                .NotBeNull("because an instance of person should be returned.")
-                .And.BeOfType<Person>("because an instance of person should be returned.");
+                .NotBeNull("because an instance of person should be returned")
+                .And.BeOfType<Person>("because an instance of person should be returned");
 
             sut.Id.Should()
-                .BeGreaterThan(0, "because returned instance of Person should have newly created Id.");
+                .BeGreaterThan(0, "because returned instance of Person should have newly created Id");
         }
 
         [Fact(DisplayName = "Insert Persons Should Return List of Type Persons")]
@@ -112,21 +112,24 @@ namespace MercurySchool.Functions.UnitTests.RepositoryTests
 
             // Assert
             sut.Should()
-                .NotBeEmpty("because because the method should not return an empty list.")
-                .And.ContainItemsAssignableTo<Person>("because the list returned should be a list of type person.")
-                .And.HaveCount(x => x > 1, "because the GetPerson method should not return 1 rows.");
+                .NotBeEmpty("because because the method should not return an empty list")
+                .And.ContainItemsAssignableTo<Person>("because the list returned should be a list of type person")
+                .And.HaveCount(x => x > 1, "because the GetPerson method should not return 1 rows");
         }
 
         [Fact]
         public async Task UpdatePersonsReturnsList()
         {
             // Arrange
+            var person0LastName = Guid.NewGuid().ToString();
+            var person1LastName = Guid.NewGuid().ToString();
+
             var person0 = new Person
             {
                 Id = 27,
                 FirstName = "Unit",
                 MiddleName = "C",
-                LastName = Guid.NewGuid().ToString()
+                LastName = person0LastName
             };
 
             var person1 = new Person
@@ -134,7 +137,7 @@ namespace MercurySchool.Functions.UnitTests.RepositoryTests
                 Id = 28,
                 FirstName = "Unit",
                 MiddleName = "D",
-                LastName = Guid.NewGuid().ToString()
+                LastName = person1LastName
             };
 
             var persons = new Queue<Person>();
@@ -145,6 +148,10 @@ namespace MercurySchool.Functions.UnitTests.RepositoryTests
             var sut = await PersonRepository.UpdatePersonsAsync(persons);
 
             // Assert
+            sut.Should()
+                .NotBeEmpty("because because the method should not return an empty list")
+                .And.ContainItemsAssignableTo<Person>("because the list returned should be a list of type person")
+                .And.HaveCount(x => x > 1, "because the GetPerson method should not return 1 rows.");
         }
 
         [Fact(DisplayName = "Update Person Should Return Person")]
@@ -166,17 +173,17 @@ namespace MercurySchool.Functions.UnitTests.RepositoryTests
 
             // Assert
             sut.Should()
-                .NotBeNull("because an instance of person should be returned.")
-                .And.BeOfType<Person>("because an instance of person should be returned.");
+                .NotBeNull("because an instance of person should be returned")
+                .And.BeOfType<Person>("because an instance of person should be returned");
 
             sut.Id.Should()
-                .Be(3, "because returned instance of person should have an Id macthing what was submitted.");
+                .Be(3, "because returned instance of person should have an Id macthing what was submitted");
 
             sut.LastName.Should()
                 .Be(lastName, $"because LastName does not equal { lastName }");
         }
 
-        [Fact(DisplayName = "DeletePerson should return the id that has been deleted.")]
+        [Fact(DisplayName = "DeletePerson should return the id that has been deleted")]
         public async Task DeletePersonReturnsDeletedId()
         {
             // Arrangev
@@ -194,7 +201,7 @@ namespace MercurySchool.Functions.UnitTests.RepositoryTests
             var sut = await PersonRepository.DeletePersonsAsync(id);
 
             // Asert
-            sut.Should().Be(id, "because DeletePersons should return the id of the deleted person.");
+            sut.Should().Be(id, "because DeletePersons should return the id of the deleted person");
         }
     }
 }
