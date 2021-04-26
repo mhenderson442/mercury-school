@@ -2,12 +2,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using MercurySchool.Functions.Repositories;
+using System.Threading.Tasks;
 
 namespace MercurySchool.Functions
 {
     public class Program
     {
-        public static void Main()
+        public static async Task Main()
         {
             var host = new HostBuilder()
                 .ConfigureFunctionsWorkerDefaults()
@@ -17,7 +18,8 @@ namespace MercurySchool.Functions
                     _ = configApp.AddJsonFile($"appsettings.{ hostContext.HostingEnvironment.EnvironmentName }.json");
                     _ = configApp.AddEnvironmentVariables();
 
-                    if(hostContext.HostingEnvironment.IsDevelopment()){
+                    if (hostContext.HostingEnvironment.IsDevelopment())
+                    {
                         _ = configApp.AddUserSecrets<Program>();
                     }
                 })
@@ -27,7 +29,7 @@ namespace MercurySchool.Functions
                 })
                 .Build();
 
-            host.Run();
+            await host.RunAsync();
         }
     }
 }

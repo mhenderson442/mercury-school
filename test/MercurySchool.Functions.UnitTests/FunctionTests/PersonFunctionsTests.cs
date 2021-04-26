@@ -5,11 +5,7 @@ namespace MercurySchool.Functions.UnitTests.FunctionTests
     public class PersonFunctionsTests
     {
 
-
-        public PersonFunctionsTests()
-        {
-            PersonFunctions = new PersonFunctions();
-        }
+        public PersonFunctionsTests() => PersonFunctions = new PersonFunctions();
         private PersonFunctions _personFunctions;
 
         public PersonFunctions PersonFunctions
