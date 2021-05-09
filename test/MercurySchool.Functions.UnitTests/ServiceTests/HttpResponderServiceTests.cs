@@ -25,8 +25,7 @@ namespace MercurySchool.Functions.UnitTests.ServiceTests
         public async Task ProcessRequestShouldReturnHttpResultData()
         {
             // Arrange
-            var functionContext = new Mock<FunctionContext>();
-            var httpRequest = new Mock<HttpRequestData>(functionContext);
+            var httpRequest = new Mock<HttpRequestData>();
             httpRequest.Setup(x => x.Body).Returns(It.IsAny<MemoryStream>());
 
             // Act
