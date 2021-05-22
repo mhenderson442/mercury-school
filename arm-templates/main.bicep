@@ -6,11 +6,24 @@ var storageAccountName = 'storage${uniqueString(resourceGroupName)}'
 var functionAppServiceName = '${resourceGroupName}-functions'
 var keyVaultName = '${resourceGroupName}-key-vault'
 var cosmosDbName = '${resourceGroupName}-cosmos-db'
+var applicationGatewayName = '${resourceGroupName}-application-gateway'
+var applicationGatewayIpName = '${resourceGroupName}-application-gateway-ip'
 
 module vnetDeployment 'vnet/vnet-template.bicep' = {
   name: '${vnetName}-deployment'
   params: {
-    ventName: vnetName
+    vnetName: vnetName
+  }
+}
+
+module iotHubDeployment 'iothub/iot-hub-template.bicep' = {
+  name: 'iot-hub-deployment'
+}
+
+module applicationGatewayIpDeployment 'public-ip/public-ip-template.bicep' = {
+  name: '${applicationGatewayIpName}-deployment'
+  params: {
+    publicIpName: applicationGatewayIpName
   }
 }
 
