@@ -19,48 +19,22 @@ resource vnet 'Microsoft.Network/virtualNetworks@2020-11-01' = {
           privateLinkServiceNetworkPolicies: 'Enabled'
           serviceEndpoints: [
             {
-              service: 'Microsoft.Storage'
-              locations: [
-                'northcentralus'
-                'southcentralus'
-              ]
-            }
-            {
-              service: 'Microsoft.EventHub'
-              locations: [
-                '*'
-              ]
-            }
-            {
-              service: 'Microsoft.AzureCosmosDB'
-              locations: [
-                '*'
-              ]
-            }
-            {
-              service: 'Microsoft.AzureActiveDirectory'
-              locations: [
-                '*'
-              ]
-            }
-            {
-              service: 'Microsoft.KeyVault'
-              locations: [
-                '*'
-              ]
-            }
-            {
-              service: 'Microsoft.ServiceBus'
-              locations: [
-                '*'
-              ]
-            }
-            {
               service: 'Microsoft.Sql'
               locations: [
                 'northcentralus'
               ]
             }
+          ]
+        }
+      }
+      {
+        name: 'app-service-subnet'
+        properties: {
+          addressPrefix: '10.0.1.0/24'
+          delegations: []
+          privateEndpointNetworkPolicies: 'Disabled'
+          privateLinkServiceNetworkPolicies: 'Enabled'
+          serviceEndpoints: [
             {
               service: 'Microsoft.Web'
               locations: [
@@ -70,19 +44,10 @@ resource vnet 'Microsoft.Network/virtualNetworks@2020-11-01' = {
           ]
         }
       }
-      {
-        name: 'application-gateway-subnet'
-        properties: {
-          addressPrefix: '10.0.1.0/24'
-          delegations: []
-          privateEndpointNetworkPolicies: 'Disabled'
-          privateLinkServiceNetworkPolicies: 'Enabled'
-        }
-      }
     ]
   }
 }
 
 output vnetId string = vnet.id
 output vnetDataSubNetId string = vnet.properties.subnets[0].id
-output vnetApplicationGatewaySubNetId string = vnet.properties.subnets[1].id
+output vnetWebSubNetId string = vnet.properties.subnets[1].id
