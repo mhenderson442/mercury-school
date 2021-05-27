@@ -24,6 +24,7 @@ resource webApp 'Microsoft.Web/sites@2020-12-01' = {
   }
   properties: {
     serverFarmId: appServicePlan.id
+
     siteConfig: {
       linuxFxVersion: 'DOTNETCORE|5.0'
       ftpsState: 'Disabled'
