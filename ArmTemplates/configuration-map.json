@@ -1,0 +1,93 @@
+{
+    "acrRegistry": {
+        "name": "mercuryschoolacr"
+    },
+    "appServicePlan": {
+        "name": "mercury-school-app-service-plan",
+        "webapi": {
+            "name": "mercury-school-api"
+        }
+    },
+    "containerApp": {
+        "name": "mercury-school-api",
+        "serviceLinker": {
+            "cosmosDb": {
+                "name": "AZURE_COSMOSDB_MERCURYSCHOOL"
+            }
+        },
+        "secrets": [
+            {
+                "name": "cosmos-connection-string"
+            }
+        ]
+    },
+    "containerAppEnvironment": {
+        "name": "mercury-school-container-env"
+    },
+    "cosmosDb": {
+        "name": "mercury-data",
+        "rbacRoles": {
+            "contributor": {
+                "name": "Contributor",
+                "id": "b24988ac-6180-42a0-ab88-20f7382dd24c"
+            }
+        },
+        "sqlDatabase": {
+            "containers": [
+                {
+                    "name": "person",
+                    "partitionKey": "/accountId"
+                },
+                {
+                    "name": "account",
+                    "partitionKey": "/id"
+                },
+                {
+                    "name": "reference",
+                    "partitionKey": "/type"
+                }
+            ],
+            "name": "school"
+        }
+    },
+    "keyVault": {
+        "keyVaultAccessGroup": "5b04fb7d-0800-479e-a992-70e15bd9b937",
+        "name": "mercury-vault",
+        "rbacRoles": {
+            "keyVaultSecretsUser": {
+                "name": "Key Vault Secrets User",
+                "id": "4633458b-17de-408a-b874-0445c86b69e6"
+            },
+            "acrPull": {
+                "name": "AcrPull",
+                "id": "7f951dda-4ed3-4680-a7ca-43fe172d538d"
+            }
+        }
+    },
+    "operationalInsights": {
+        "workspace": {
+            "name": "mercuryschool-workspace"
+        }
+    },
+    "resourceGroups": [
+        {
+            "location": "northcentralus",
+            "name": "mercury-school"
+        }
+    ],
+    "subscriptions": [
+        {
+            "id": "4e784a68-55b0-4d91-b544-279d3a7f71e1",
+            "name": "Visual Studio Professional 01"
+        },
+        {
+            "id": "0f172ae6-633b-42aa-8de2-6c7631999054",
+            "name": "Visual Studio Professional 02"
+        }
+    ],
+    "userAssignedIdentities": [
+        {
+            "name": "mercury-school-identity"
+        }
+    ]
+}

@@ -3,7 +3,7 @@ $configrutation = Get-Content -Path ".\resource-configuration-mapping.json" | Co
 
 $resourceGroupExists = (az group exists --resource-group $configrutation.resourceGroup.name)
 
-if($resourceGroupExists -eq $true){
+if ($resourceGroupExists -eq $true) {
     $message = "Resource Group {0} exists" -f $configrutation.resourceGroup.name
     Write-Host $message -BackgroundColor Blue -ForegroundColor Yellow
 
@@ -15,14 +15,14 @@ $message = "Create Resource Group {0}" -f $configrutation.resourceGroup.name
 Write-Host $message -BackgroundColor Blue -ForegroundColor Yellow
 
 $group = (az group create `
-    --location $configrutation.resourceGroup.location `
-    --resource-group $configrutation.resourceGroup.name) `
-    | ConvertFrom-Json
+        --location $configrutation.resourceGroup.location `
+        --resource-group $configrutation.resourceGroup.name) `
+| ConvertFrom-Json
 
 $result = "Resource Group created: {0}" -f $group.properties.provisioningState
 Write-Host $result -BackgroundColor Blue -ForegroundColor Yellow
 
-if($group.properties.provisioningState -eq "Sucess"){
+if ($group.properties.provisioningState -eq "Sucess") {
     Deploy-AzureResources($configrutation)
 
     Exit

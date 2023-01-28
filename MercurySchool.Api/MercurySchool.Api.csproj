@@ -1,14 +1,54 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PublishProfile>DefaultContainer</PublishProfile>
+		<ContainerImageTag>latest</ContainerImageTag>
+		<ContainerImageName>mercuryschool-api</ContainerImageName>
+		<UserSecretsId>267b1952-4e37-4074-9ed7-62676de16dfc</UserSecretsId>
+		<RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+		
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<ContainerPort Include="80" Type="tcp" />
+		<ContainerPort Include="5000" Type="tcp" />
+		<ContainerEnvironmentVariable Include="KeyVaultName" Value="KeyVaultName" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <Content Remove="C:\Users\mhenderson\.nuget\packages\microsoft.azure.cosmos\3.31.2\contentFiles\any\netstandard2.0\ThirdPartyNotice.txt" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.2" />
+		<PackageReference Include="Azure.Identity" Version="1.8.1" />
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.2" />
+		<PackageReference Include="Microsoft.Azure.Cosmos" Version="3.31.2" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.0" />
+		<PackageReference Include="Microsoft.NET.Build.Containers" Version="0.3.2" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="Microsoft.Azure.Cosmos.Linq" />
+		<Using Include="System" />
+		<Using Include="System.Diagnostics.CodeAnalysis" />
+		<Using Include="System.Threading.Tasks" />
+		<Using Include="Microsoft.Azure.Cosmos" />
+		<Using Include="MercurySchool.Api.Models" />
+		<Using Include="Microsoft.AspNetCore.Mvc" />
+		<Using Include="MercurySchool.Api.Repositories" />
+		<Using Include="MercurySchool.Api.Constants" />
+		<Using Include="System.Text.Json.Serialization" />
+		<Using Include="MercurySchool.Api.Utilities" />
+		<Using Include="MercurySchool.Api.Factories" />
+		<Using Include="Azure.Identity" />
+		<Using Include="Azure.Extensions.AspNetCore.Configuration.Secrets" />
+		<Using Include="Microsoft.Azure.Cosmos.Fluent" />
+		<Using Include="System.Text.RegularExpressions" />
+	</ItemGroup>
 
 </Project>
