@@ -50,7 +50,7 @@ public class PersonControllerTests : TestClassBase
 
     [Fact(DisplayName = "Get Person Returns Bad Request")]
     [Trait("Category", "Unit")]
-    public async Task GetPersonsReturnsBadRequst()
+    public async Task GetPersonsReturnsBadRequest()
     {
         // Arrange
         var mockPersonRepository = CreateMockPersonRepository();

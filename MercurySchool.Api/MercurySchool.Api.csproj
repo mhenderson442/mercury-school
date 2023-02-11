@@ -4,23 +4,16 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<PublishProfile>DefaultContainer</PublishProfile>
-		<ContainerImageTag>latest</ContainerImageTag>
-		<ContainerImageName>mercuryschool-api</ContainerImageName>
-		<UserSecretsId>267b1952-4e37-4074-9ed7-62676de16dfc</UserSecretsId>
-		<RuntimeIdentifier>linux-x64</RuntimeIdentifier>
-		
+		<UserSecretsId>mercury-school-secrets</UserSecretsId>		
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ContainerPort Include="80" Type="tcp" />
-		<ContainerPort Include="5000" Type="tcp" />
 		<ContainerEnvironmentVariable Include="KeyVaultName" Value="KeyVaultName" />
 	</ItemGroup>
-	
-	<ItemGroup>
-	  <Content Remove="C:\Users\mhenderson\.nuget\packages\microsoft.azure.cosmos\3.31.2\contentFiles\any\netstandard2.0\ThirdPartyNotice.txt" />
-	</ItemGroup>
+
+	<PropertyGroup>
+  		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.2.2" />
