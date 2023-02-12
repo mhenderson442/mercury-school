@@ -1,5 +1,8 @@
 ﻿namespace MercurySchool.Api.Repositories;
 
+/// <summary>
+/// Reference Data Repository
+/// </summary>
 public interface IReferenceDataRepository
 {
     /// <summary>

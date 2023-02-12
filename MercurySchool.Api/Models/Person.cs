@@ -9,6 +9,14 @@ public class Person : Account
     private string _firstName;
     private string _lastName;
 
+    /// <summary>
+    /// Constructor for Person
+    /// </summary>
+    /// <param name="id">Document OD</param>
+    /// <param name="accountId">Account document Id</param>
+    /// <param name="firstName">First Name</param>
+    /// <param name="lastName">Last Name</param>
+    /// <returns></returns>
     [SetsRequiredMembers]
     public Person(
         string id,

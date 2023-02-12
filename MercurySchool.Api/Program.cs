@@ -9,19 +9,7 @@ if (builder.Environment.IsEnvironment("Development"))
 }
 
 var vaultUri = $"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/";
-
-//builder.Configuration.AddAzureKeyVault(
-//    new Uri(vaultUri),
-//    new DefaultAzureCredential(),
-//    new AzureKeyVaultConfigurationOptions
-//    {
-//        ReloadInterval = TimeSpan.FromDays(30)
-//    }
-//);
-
-//builder.Services.Configure<AppSettings>(builder.Configuration.GetSection(nameof(AppSettings)));
-
-// var connectionString = builder.Configuration["AppSettings:CosmosConnectionString"];
+;
 var connectionString = builder.Configuration["cosmos-connection-string"];
 
 builder.Services.AddSingleton((s) =>
