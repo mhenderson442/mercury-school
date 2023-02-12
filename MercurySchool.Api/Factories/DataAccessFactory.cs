@@ -6,15 +6,15 @@ internal class DataAccessFactory : IDataAccessFactory
 
     public DataAccessFactory(CosmosClient cosmosClient) => _cosmosClient = cosmosClient;
 
-    public async Task<Container> GetPersonContainerAsync() => await GetContainerAsync(ComsosConstants.PersonContainer);
+    public async Task<Container> GetPersonContainerAsync() => await GetContainerAsync(CosmosDbConstants.PersonContainer);
 
-    public async Task<Container> GetReferenceDataContainerAsync() => await GetContainerAsync(ComsosConstants.ReferenceContainer);
+    public async Task<Container> GetReferenceDataContainerAsync() => await GetContainerAsync(CosmosDbConstants.ReferenceContainer);
 
     private async Task<Container> GetContainerAsync(string containerName)
     {
         await Task.Yield();
 
-        var container = _cosmosClient.GetContainer(ComsosConstants.SchoolDatabase, containerName);
+        var container = _cosmosClient.GetContainer(CosmosDbConstants.SchoolDatabase, containerName);
 
         if (container is null)
         {

@@ -1,6 +1,6 @@
 ﻿namespace MercurySchool.Api.Constants;
 
-internal class ComsosConstants
+internal class CosmosDbConstants
 {
     public const string SchoolDatabase = "school";
     public const string PersonContainer = "person";
