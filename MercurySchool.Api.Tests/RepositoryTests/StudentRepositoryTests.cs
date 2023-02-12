@@ -1,12 +1,12 @@
 ﻿namespace MercurySchool.Api.Tests.RepositoryTests;
-public class StudentRespositoryTests : TestClassBase
+public class StudentRepositoryTests : TestClassBase
 {
     private readonly string _accountId = "156600";
 
 
-    [Theory(DisplayName = "StudentItemAsync Should Return Item")]
+    [Theory]
     [InlineData("B127BB59-42FD-4E51-8681-72C43CB46373", "8abeae0a-21ef-48b7-b7f3-8afac6fe5c3e")]
-    //[InlineData(null, "1626bfea-9a32-48f0-a36a-43f3922cebd8")]
+    [InlineData(null, "1626bfea-9a32-48f0-a36a-43f3922cebd8")]
     [Trait("Category", "Integration")]
     public async Task UpsertStudentItemShouldReturnItem(string? id, string personId)
     {
@@ -15,7 +15,7 @@ public class StudentRespositoryTests : TestClassBase
         id ??= Guid.NewGuid().ToString();
         var student = new Student(id: id);
 
-        IStudentRepository sut = CreatStudentRepository();
+        IStudentRepository sut = CreateStudentRepository();
 
         var patchOperations = new List<PatchOperation>()
         {
@@ -29,7 +29,7 @@ public class StudentRespositoryTests : TestClassBase
         result.Should().NotBeNull().And.BeAssignableTo<ItemResponse<Person>>();
     }
 
-    private static IStudentRepository CreatStudentRepository()
+    private static IStudentRepository CreateStudentRepository()
     {
         var databaseAccessFactory = CreateDataAccessFactory();
         IStudentRepository studentRepository = new StudentRepository(databaseAccessFactory);

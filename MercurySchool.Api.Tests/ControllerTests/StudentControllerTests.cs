@@ -1,7 +1,7 @@
 ﻿namespace MercurySchool.Api.Tests.ControllerTests;
 public class StudentControllerTests : TestClassBase
 {
-    [Fact(DisplayName = "Upsert Student Returns OK Result")]
+    [Fact]
     [Trait("Category", "Unit")]
     public async Task PatchAsyncReturnsStudent()
     {

@@ -1,7 +1,7 @@
 ﻿namespace MercurySchool.Api.Tests.RepositoryTests;
 public class ReferenceDataRepositoryTests : TestClassBase
 {
-    [Fact(DisplayName = "Get reference data returns list")]
+    [Fact]
     [Trait("Category", "Integration")]
     public async Task GetReferenceDataReturnsList()
     {

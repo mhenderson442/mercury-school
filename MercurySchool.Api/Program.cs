@@ -5,7 +5,7 @@ builder.Configuration.AddEnvironmentVariables();
 
 if (builder.Environment.IsEnvironment("Development"))
 {
-    builder.Configuration.AddUserSecrets("267b1952-4e37-4074-9ed7-62676de16dfc");
+    builder.Configuration.AddUserSecrets("mercury-school-secrets");
 }
 
 var vaultUri = $"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/";

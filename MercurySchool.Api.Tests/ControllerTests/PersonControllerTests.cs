@@ -1,7 +1,7 @@
 ﻿namespace MercurySchool.Api.Tests.ControllerTests;
 public class PersonControllerTests : TestClassBase
 {
-    [Fact(DisplayName = "Get Person Returns List of Persons")]
+    [Fact]
     [Trait("Category", "Unit")]
     public async Task GetPersonReturnListOfPersons()
     {
@@ -27,7 +27,7 @@ public class PersonControllerTests : TestClassBase
             .And.BeAssignableTo<OkObjectResult>();
     }
 
-    [Fact(DisplayName = "Get Person Returns Not Found")]
+    [Fact]
     [Trait("Category", "Unit")]
     public async Task GetPersonsReturnNotFound()
     {
@@ -48,7 +48,7 @@ public class PersonControllerTests : TestClassBase
             .And.BeAssignableTo<NotFoundObjectResult>();
     }
 
-    [Fact(DisplayName = "Get Person Returns Bad Request")]
+    [Fact]
     [Trait("Category", "Unit")]
     public async Task GetPersonsReturnsBadRequest()
     {
@@ -69,7 +69,7 @@ public class PersonControllerTests : TestClassBase
             .And.BeAssignableTo<BadRequestObjectResult>();
     }
 
-    [Fact(DisplayName = "Upsert Person Returns OK Result")]
+    [Fact]
     [Trait("Category", "Unit")]
     public async Task PostAsyncReturnsPerson()
     {

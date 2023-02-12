@@ -2,7 +2,7 @@
 public class ReferenceDataControllerTests : TestClassBase
 {
 
-    [Fact(DisplayName = "Given a type, GetAsync returns an OK result")]
+    [Fact]
     [Trait("Category", "Unit")]
     public async Task GetReferenceDataByType_ShouldReturnOkResult()
     {
@@ -24,7 +24,7 @@ public class ReferenceDataControllerTests : TestClassBase
         result?.Value.Should().BeAssignableTo<List<string>>();
     }
 
-    [Fact(DisplayName = "Given a type is null, GetAsync returns an OK result")]
+    [Fact]
     [Trait("Category", "Unit")]
     public async Task GetPersonsReturnNotFound()
     {
@@ -47,7 +47,7 @@ public class ReferenceDataControllerTests : TestClassBase
             .And.BeAssignableTo<NotFoundObjectResult>();
     }
 
-    [Fact(DisplayName = "Get Reference Data Returns Bad Request")]
+    [Fact]
     [Trait("Category", "Unit")]
     public async Task GetPersonsReturnsBadRequst()
     {

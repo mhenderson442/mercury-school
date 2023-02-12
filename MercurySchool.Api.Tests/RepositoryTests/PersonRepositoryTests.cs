@@ -4,7 +4,7 @@ public class PersonRepositoryTests : TestClassBase
     private readonly string _accountId = "156600";
 
 
-    [Fact(DisplayName = "Get Persons Should Return List")]
+    [Fact]
     [Trait("Category", "Integration")]
     public async Task GetPersonsShouldReturnList()
     {
@@ -21,7 +21,7 @@ public class PersonRepositoryTests : TestClassBase
 
     }
 
-    [Theory(DisplayName = "UpsertPersonItemAsync Should Return Item")]
+    [Theory]
     [InlineData("8abeae0a-21ef-48b7-b7f3-8afac6fe5c3e")]
     [InlineData(null)]
     [Trait("Category", "Integration")]
