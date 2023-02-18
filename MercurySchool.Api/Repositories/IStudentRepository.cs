@@ -6,6 +6,13 @@
 public interface IStudentRepository
 {
     /// <summary>
+    /// Get list of type PatchOperation
+    /// </summary>
+    /// <param name="student"><see cref="Student">Instance of student</see></param>
+    /// <returns>List of type <see cref="PatchOperation">PatchOperation</see></returns>
+    Task<List<PatchOperation>> AddStudentPatchOperationsAsync(Student student);
+
+    /// <summary>
     /// Add person to data store.
     /// </summary>
     /// <param name="patchOperations">Instance for <see cref="PatchOperation">PatchOperation</see></param>

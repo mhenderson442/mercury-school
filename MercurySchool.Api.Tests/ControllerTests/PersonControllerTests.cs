@@ -48,27 +48,7 @@ public class PersonControllerTests : TestClassBase
             .And.BeAssignableTo<NotFoundObjectResult>();
     }
 
-    [Fact]
-    [Trait("Category", "Unit")]
-    public async Task GetPersonsReturnsBadRequest()
-    {
-        // Arrange
-        var mockPersonRepository = CreateMockPersonRepository();
-        mockPersonRepository.Setup(x => x.GetPersonsAsync(MockedAccountId)).ThrowsAsync(new NullReferenceException());
-
-        var sut = CreatePersonController(mockPersonRepository);
-
-        // Act
-        var result = (BadRequestObjectResult)await sut.GetAsync(MockedAccountId);
-
-        // Assert
-        mockPersonRepository.Verify(x => x.GetPersonsAsync(MockedAccountId));
-
-        result.Should()
-            .NotBeNull()
-            .And.BeAssignableTo<BadRequestObjectResult>();
-    }
-
+    
     [Fact]
     [Trait("Category", "Unit")]
     public async Task PostAsyncReturnsPerson()

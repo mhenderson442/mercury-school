@@ -23,21 +23,14 @@ public class PersonController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAsync(string accountId)
     {
-        try
-        {
-            var persons = await _personRepository.GetPersonsAsync(accountId);
+        var persons = await _personRepository.GetPersonsAsync(accountId);
 
-            if (persons is null || persons.Count == 0)
-            {
-                return NotFound($"Unable to find persons associated with {accountId}");
-            }
-
-            return Ok(persons);
-        }
-        catch (NullReferenceException ex)
+        if (persons is null || persons.Count == 0)
         {
-            return BadRequest(ex.Message);
+            return NotFound($"Unable to find persons associated with {accountId}");
         }
+
+        return Ok(persons);
     }
 
     /// <summary>

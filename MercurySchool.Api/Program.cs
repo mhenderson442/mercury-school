@@ -3,18 +3,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddEnvironmentVariables();
 
-if (builder.Environment.IsEnvironment("Development"))
-{
-    builder.Configuration.AddUserSecrets("mercury-school-secrets");
-}
+builder.Configuration.AddAzureKeyVault(
+        new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
+        new DefaultAzureCredential());
 
-var connectionString = builder.Configuration["cosmos-connection-string"];
+var appSettings = builder.Configuration.GetSection("AppSettings").Get<AppSettings>();
 
 builder.Services.AddSingleton((s) =>
 {
     var serializationOptions = CosmosUtilities.CreateCosmosSerializationOptions();
-
-    CosmosClientBuilder configurationBuilder = new CosmosClientBuilder(connectionString)
+    var configurationBuilder = new CosmosClientBuilder(appSettings?.CosmosConnectionString)
     .WithSerializerOptions(cosmosSerializerOptions: serializationOptions);
 
     return configurationBuilder.Build();
@@ -40,7 +38,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+        options.RoutePrefix = string.Empty;
+    });
 }
 
 app.UseHttpsRedirection();

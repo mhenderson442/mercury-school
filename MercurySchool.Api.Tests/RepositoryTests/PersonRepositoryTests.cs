@@ -17,7 +17,7 @@ public class PersonRepositoryTests : TestClassBase
 
         // Assert
         Assert.NotNull(result);
-        Assert.IsAssignableFrom<IList<IPerson>>(result);
+        Assert.IsAssignableFrom<IList<Person>>(result);
 
     }
 
@@ -40,7 +40,7 @@ public class PersonRepositoryTests : TestClassBase
         var result = await sut.UpsertPersonItemAsync(person);
 
         // Assert
-        result.Should().NotBeNull().And.BeAssignableTo<ItemResponse<IPerson>>();
+        result.Should().NotBeNull().And.BeAssignableTo<ItemResponse<Person>>();
 
     }
 

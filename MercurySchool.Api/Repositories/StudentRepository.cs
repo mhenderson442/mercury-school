@@ -34,4 +34,21 @@ public class StudentRepository : IStudentRepository
 
         return itemResponse;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="student"></param>
+    /// <returns></returns>
+    public async Task<List<PatchOperation>> AddStudentPatchOperationsAsync(Student student)
+    {
+        await Task.Yield();
+        
+        var patchOperations = new List<PatchOperation>()
+        {
+            PatchOperation.Add("/student", student)
+        };
+
+        return patchOperations;
+    }
 }

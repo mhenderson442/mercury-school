@@ -25,24 +25,9 @@ public class StudentController : ControllerBase
     [HttpPatch]
     public async Task<IActionResult> PatchPersonAddStudentAsync(Student student, string accountId, string personId)
     {
-        var patchOperations = AddStudentPatchOperations(student);
-        var itemResponse = await PatchPersonWithStudentItemAsync(patchOperations, accountId, personId);
+        var patchOperations = await _studentRepository.AddStudentPatchOperationsAsync(student);
+        var itemResponse = await _studentRepository.PatchPersonItemAddStudentAsync(patchOperations, accountId, personId);
 
         return Ok(itemResponse.Resource);
-    }
-
-    private static List<PatchOperation> AddStudentPatchOperations(Student student)
-    {
-        var patchOperations = new List<PatchOperation>()
-        {
-            PatchOperation.Add("/student", student)
-        };
-
-        return patchOperations;
-    }
-
-    private async Task<ItemResponse<Person>> PatchPersonWithStudentItemAsync(List<PatchOperation> patchOperations, string accountId, string personId)
-    {
-        return await _studentRepository.PatchPersonItemAddStudentAsync(patchOperations, accountId, personId);
     }
 }
