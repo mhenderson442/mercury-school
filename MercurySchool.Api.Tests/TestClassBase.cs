@@ -8,22 +8,19 @@ public class TestClassBase
 
     public static IConfiguration CreateConfiguration()
     {
-        var vaultUri = new Uri("https://mercury-vault-mfygi.vault.azure.net/");
-
         var config = new ConfigurationBuilder()
 
            .AddEnvironmentVariables()
-           .AddJsonFile($"{Environment.CurrentDirectory}/settings.json")
-           .AddAzureKeyVault(vaultUri, new DefaultAzureCredential())
+           .AddUserSecrets("mercury-school-secrets")
            .Build();
 
         return config;
     }
 
-    public static CosmosClient CreateTestCosomosClient()
+    public static CosmosClient CreateTestCosmosClient()
     {
         var configuration = CreateConfiguration();
-        var connectionString = configuration.GetValue<string>("AppSettings:CosmosConnectionString");
+        var connectionString = configuration.GetValue<string>("cosmos-connection-string");
 
         var serializationOptions = CosmosUtilities.CreateCosmosSerializationOptions();
 
@@ -41,7 +38,7 @@ public class TestClassBase
 
     internal static IDataAccessFactory CreateDataAccessFactory()
     {
-        var cosmosClient = CreateTestCosomosClient();
+        var cosmosClient = CreateTestCosmosClient();
         return new DataAccessFactory(cosmosClient);
     }
 

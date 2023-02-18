@@ -8,8 +8,6 @@ if (builder.Environment.IsEnvironment("Development"))
     builder.Configuration.AddUserSecrets("mercury-school-secrets");
 }
 
-var vaultUri = $"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/";
-;
 var connectionString = builder.Configuration["cosmos-connection-string"];
 
 builder.Services.AddSingleton((s) =>

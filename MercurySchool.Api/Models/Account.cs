@@ -3,7 +3,7 @@
 /// <summary>
 /// Account
 /// </summary>
-public abstract class Account
+public abstract class Account : IAccount
 {
     private string _accountId;
 
