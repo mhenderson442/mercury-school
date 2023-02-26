@@ -3,7 +3,7 @@
 /// <summary>
 /// Person
 /// </summary>
-public class Person : Account, IPerson
+public class Person : Account
 {
     private string _id;
     private string _firstName;

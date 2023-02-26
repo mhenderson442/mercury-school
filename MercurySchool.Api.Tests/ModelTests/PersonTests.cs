@@ -12,11 +12,11 @@ namespace MercurySchool.Api.Tests.ModelTests
             var lastName = "Public";
 
             // Act
-            IPerson sut = new Person(id,accountId,firstName,lastName);
+            var sut = new Person(id,accountId,firstName,lastName);
             sut.MiddleName = "Q";
 
             // Assert
-            sut.Should().BeAssignableTo<IPerson>();
+            sut.Should().BeAssignableTo<Person>();
         }
     }
 }
