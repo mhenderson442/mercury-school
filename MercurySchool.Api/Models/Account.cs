@@ -1,21 +1,17 @@
-﻿namespace MercurySchool.Api.Models;
+﻿using System.Diagnostics;
+
+namespace MercurySchool.Api.Models;
 
 /// <summary>
-/// Account
+/// Account record
 /// </summary>
-public abstract class Account : IAccount
+/// <param name="AccountId">Accepts a string intended to be an Id form data store</param>
+/// <returns>Account</returns>
+[DebuggerDisplay($"{{{nameof(GetDebuggerDisplay)}(),nq}}")]
+public abstract record Account(string AccountId)
 {
-    private string _accountId;
-
-    /// <summary>
-    /// Constructor
-    /// </summary>
-    /// <param name="accountId">Account Id</param>
-    public Account(string accountId) => AccountId = _accountId = accountId;
-
-    /// <summary>
-    /// Account Id property
-    /// </summary>
-    /// <value></value>
-    required public string AccountId { get => _accountId; init => _accountId = value; }
+    private string GetDebuggerDisplay()
+    {
+        return ToString();
+    }
 }

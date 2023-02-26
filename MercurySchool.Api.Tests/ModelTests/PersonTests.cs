@@ -3,7 +3,7 @@ namespace MercurySchool.Api.Tests.ModelTests
     public class PersonTests
     {
         [Fact]
-        public void PersonObjectImplementInterface()
+        public void PersonObjectImplementsInterface()
         {
             // Arrange
             var id = Guid.NewGuid().ToString();
@@ -12,9 +12,8 @@ namespace MercurySchool.Api.Tests.ModelTests
             var lastName = "Public";
 
             // Act
-            var sut = new Person(id,accountId,firstName,lastName);
-            sut.MiddleName = "Q";
-
+            var sut = new Person(accountId){ Id = id, FirstName = firstName, MiddleName = "Q", LastName = lastName};
+  
             // Assert
             sut.Should().BeAssignableTo<Person>();
         }

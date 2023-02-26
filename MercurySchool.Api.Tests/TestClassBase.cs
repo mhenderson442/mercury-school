@@ -5,7 +5,6 @@ public class TestClassBase
 {
     public const string MockedAccountId = "156600";
 
-
     public static IConfiguration CreateConfiguration()
     {
         var config = new ConfigurationBuilder()
@@ -45,7 +44,7 @@ public class TestClassBase
     internal static Student InitMockedStudent()
     {
         var id = Guid.NewGuid().ToString();
-        var student = new Student(id);
+        var student = new Student(id, null);
 
         return student;
     }

@@ -80,7 +80,9 @@ public class PersonControllerTests : TestClassBase
         var lastName = "IntegrationTest";
         var accountId = "156600";
 
-        return new Person(id, accountId, firstName, lastName);
+        var person = new Person(accountId){ Id = id, FirstName = firstName, LastName = lastName};
+
+        return person;
     }
 
     private static PersonController CreatePersonController(Mock<IPersonRepository> mockPersonRepository) => new(mockPersonRepository.Object);

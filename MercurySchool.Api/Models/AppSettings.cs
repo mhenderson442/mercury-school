@@ -1,6 +1,12 @@
-﻿namespace MercurySchool.Api.Models;
+﻿using System.Diagnostics;
 
-internal class AppSettings
+namespace MercurySchool.Api.Models;
+
+[DebuggerDisplay($"{{{nameof(GetDebuggerDisplay)}(),nq}}")]
+internal record AppSettings(string CosmosConnectionString)
 {
-    required public string CosmosConnectionString { get; init; }
+    private string GetDebuggerDisplay()
+    {
+        return ToString();
+    }
 }

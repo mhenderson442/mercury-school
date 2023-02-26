@@ -30,10 +30,12 @@ public class PersonRepositoryTests : TestClassBase
 
         // Arrange
         id ??= Guid.NewGuid().ToString();
+        var accountId = "156600";
         var firstName = "Mike";
         var lastName = "IntegrationTest";
+        var middleName = "Q";
 
-        var person = new Person(id, _accountId, firstName, lastName);
+        var person = new Person(accountId){Id = id, FirstName = firstName, MiddleName = middleName, LastName = lastName};
         IPersonRepository sut = CreatePersonRepository();
 
         // Act

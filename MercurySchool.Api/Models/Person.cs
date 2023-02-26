@@ -1,62 +1,43 @@
-﻿namespace MercurySchool.Api.Models;
+﻿using System.Diagnostics;
+
+namespace MercurySchool.Api.Models;
 
 /// <summary>
-/// Person
+/// Person record
 /// </summary>
-public class Person : Account
+/// <param name="AccountId">Account Id</param>
+/// <returns>Person</returns>
+public record Person(string AccountId) : Account(AccountId)
 {
-    private string _id;
-    private string _firstName;
-    private string _lastName;
+    /// <summary>
+    /// Id
+    /// </summary>
+    /// <value></value>
+    public required string Id { get; init; }
 
     /// <summary>
-    /// Constructor for Person
+    /// First Name
     /// </summary>
-    /// <param name="id">Document OD</param>
-    /// <param name="accountId">Account document Id</param>
-    /// <param name="firstName">First Name</param>
-    /// <param name="lastName">Last Name</param>
-    /// <returns></returns>
-    [SetsRequiredMembers]
-    public Person(
-        string id,
-        string accountId,
-        string firstName,
-        string lastName) : base(accountId: accountId)
-    {
-        FirstName = _firstName = firstName;
-        LastName = _lastName = lastName;
-        Id = _id = id;
-        AccountId = accountId;
-    }
+    /// <value>First Name</value>
+    public required string FirstName { get; init; }
 
     /// <summary>
-    /// Person's first name
+    /// Middle Name
     /// </summary>
-    required public string FirstName { get => _firstName; set => _firstName = value; }
+    /// <value>Middle Name</value>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull )]
+    public string? MiddleName { get; init; }
 
     /// <summary>
-    /// Person's Id
+    /// Last Name
     /// </summary>
-    required public string Id { get => _id; init => _id = value; }
+    /// <value>Last Name</value>
+    public required string LastName { get; init; }
 
     /// <summary>
-    /// Person's last name
+    /// Student
     /// </summary>
-    required public string LastName { get => _lastName; set => _lastName = value; }
-
-    /// <summary>
-    /// Person's middle name (optional)
-    /// </summary>
-    public string? MiddleName { get; set; }
-
-    /// <summary>
-    /// Item type stored in Person database container
-    /// </summary>
-    public string ItemType => nameof(Person);
-
-    /// <summary>
-    /// Person's student record
-    /// </summary>
-    public Student? Student { get; set; }
+    /// <value>Student</value>
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull )]
+    public Student? Student { get; init; }
 }

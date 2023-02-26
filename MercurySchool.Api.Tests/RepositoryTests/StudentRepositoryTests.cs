@@ -13,7 +13,7 @@ public class StudentRepositoryTests : TestClassBase
 
         // Arrange
         id ??= Guid.NewGuid().ToString();
-        var student = new Student(id: id);
+        var student = new Student(id, null);
 
         IStudentRepository sut = CreateStudentRepository();
 

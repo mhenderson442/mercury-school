@@ -32,6 +32,8 @@ internal class PersonRepository : IPersonRepository
     public async Task<ItemResponse<Person>> UpsertPersonItemAsync(Person person)
     {
         var container = await _dataAccessFactory.GetPersonContainerAsync();
+
+   
         var itemResponse = await container.UpsertItemAsync<Person>(item: person);
 
         return itemResponse;

@@ -1,26 +1,18 @@
-﻿namespace MercurySchool.Api.Models;
+﻿using System.Diagnostics;
+
+namespace MercurySchool.Api.Models;
 
 /// <summary>
-/// Student
+/// Student record
 /// </summary>
-public class Student
+/// <param name="Id">Student Id</param>
+/// <param name="AcademicStatus">Academic Status</param>
+/// <returns>Student</returns>
+[DebuggerDisplay($"{{{nameof(GetDebuggerDisplay)}(),nq}}")]
+public record Student(string Id, string? AcademicStatus)
 {
-    private string _id;
-
-    /// <summary>
-    /// Constructor
-    /// </summary>
-    /// <param name="id">Student Id</param>
-    [SetsRequiredMembers]
-    public Student(string id) => Id = _id = id;
-
-    /// <summary>
-    /// Student's academic status
-    /// </summary>
-    public string? AcademicStatus { get; set; }
-
-    /// <summary>
-    /// Student's Id
-    /// </summary>
-    required public string Id { get => _id; init => _id = value; }
+    private string GetDebuggerDisplay()
+    {
+        return ToString();
+    }
 }
