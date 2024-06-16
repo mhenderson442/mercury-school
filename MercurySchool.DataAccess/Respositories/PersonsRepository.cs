@@ -14,14 +14,31 @@ public class PersonsRepository(ISqlConnectionFactory sqlConnectionFactory) : IPe
     }
 
     /// <inheritdoc/>
-    public async Task<IList<Person>> GetPersonsAsync(string startsWithValue)
+    public async Task<IList<Person>> GetPersonsAsync(string startsWithValue) => await GetPersonsBaseAsync(startsWithValue);
+
+    /// <inheritdoc/>
+    public async Task<IList<Person>> GetPersonsAsync() => await GetPersonsBaseAsync();
+
+    public async Task<bool> PatchPersonsAsync(PatchRequest<string> patchRequest)
     {
         await Task.Yield();
         throw new NotImplementedException();
     }
 
-    /// <inheritdoc/>
-    public async Task<IList<Person>> GetPersonsAsync()
+    /// <inheritdoc/
+    public async Task<bool> PostPersonsAsync(Person person)
+    {
+        await Task.Yield();
+        throw new NotImplementedException();
+    }
+
+    public async Task<bool> PutPersonsAsync(Person person)
+    {
+        await Task.Yield();
+        throw new NotImplementedException();
+    }
+
+    private async Task<IList<Person>> GetPersonsBaseAsync(string? startsWithValue = null)
     {
         using var sqlConnection = await _connectionFactory.CreateAsync();
         await sqlConnection.OpenAsync();
@@ -29,6 +46,11 @@ public class PersonsRepository(ISqlConnectionFactory sqlConnectionFactory) : IPe
         using var sqlCommand = sqlConnection.CreateCommand();
         sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
         sqlCommand.CommandText = "api.GetPersons";
+
+        if (startsWithValue is not null)
+        {
+            sqlCommand.Parameters.AddWithValue("@StartsWith", startsWithValue);
+        }
 
         using var reader = await sqlCommand.ExecuteReaderAsync();
 
@@ -48,31 +70,5 @@ public class PersonsRepository(ISqlConnectionFactory sqlConnectionFactory) : IPe
         }
 
         return persons;
-    }
-
-    //var person = new Person
-    //{
-    //    Id = reader.GetGuid(0),
-    //    FirstName = reader.GetString(1),
-    //    MiddleName = reader.GetString(2),
-    //    LastName = reader.GetString(3),
-    //}
-    public async Task<bool> PatchPersonsAsync(PatchRequest<string> patchRequest)
-    {
-        await Task.Yield();
-        throw new NotImplementedException();
-    }
-
-    /// <inheritdoc/
-    public async Task<bool> PostPersonsAsync(Person person)
-    {
-        await Task.Yield();
-        throw new NotImplementedException();
-    }
-
-    public async Task<bool> PutPersonsAsync(Person person)
-    {
-        await Task.Yield();
-        throw new NotImplementedException();
     }
 }

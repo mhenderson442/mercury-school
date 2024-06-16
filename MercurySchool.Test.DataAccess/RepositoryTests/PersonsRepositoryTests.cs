@@ -15,6 +15,20 @@ public class PersonsRepositoryTests : TestBase
         result.Should().BeAssignableTo<List<Person?>>();
     }
 
+    [Fact(DisplayName = "GetPersonsAsync with parameter should return a person")]
+    public async Task GetSchoolAsyncWithParameterShouldReturnSchool()
+    {
+        // Arrange
+        var startsWith = "A";
+        var sut = InitializePersonsRepository();
+
+        // Act
+        var result = await sut.GetPersonsAsync(startsWith);
+
+        // Assert
+        result.Should().BeAssignableTo<List<Person?>>();
+    }
+
     private static PersonsRepository InitializePersonsRepository()
     {
         var sqlConnectionFactory = InitializeSqlConnectionFactory();

@@ -34,7 +34,7 @@ public static class DependencyInjection
         _ = services.AddScoped<IPersonsService, PersonsService>();
 
         _ = services.AddScoped<ISchoolsRepository, SchoolsRepository>();
-        _ = services.AddScoped<IPersonsRepository, SchoolsRepository>();
+        _ = services.AddScoped<IPersonsRepository, PersonsRepository>();
 
         services.AddAzureClients(clientBuilder =>
         {
