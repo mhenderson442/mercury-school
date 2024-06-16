@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -7,7 +7,7 @@
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
-    <UserSecretsId>mercury-school-data-access-secrets</UserSecretsId>
+    <UserSecretsId>mercury-school-secrets</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,7 +32,12 @@
     <Using Include="Xunit" />
     <Using Include="Azure.Identity" />
     <Using Include="MercurySchool.DataAccess" />
+    <Using Include="MercurySchool.DataAccess.Respositories" />
+    
     <Using Include="MercurySchool.Models" />
+    <Using Include="MercurySchool.Models.Entities" />
+    
+    
     <Using Include="Microsoft.Extensions.Configuration" />
     <Using Include="Microsoft.Extensions.Options" />
     <Using Include="FluentAssertions" />

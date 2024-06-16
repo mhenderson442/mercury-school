@@ -4,11 +4,17 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>mercury-school-secrets</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Aspire.Microsoft.Data.SqlClient" Version="8.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.6" />
+    
+    <PackageReference Include="Microsoft.Azure.AppConfiguration.AspNetCore" Version="8.0.0-preview.2" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.1" />
+    
+    <PackageReference Include="Microsoft.Extensions.Azure" Version="1.7.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
@@ -17,4 +23,20 @@
     <ProjectReference Include="..\MercurySchool.Models\MercurySchool.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Using Include="MercurySchool.Models.Entities" />
+    <Using Include="Azure.Identity" />
+    <Using Include="MercurySchool.Api.Services" />
+    <Using Include="MercurySchool.DataAccess.Factories" />
+    <Using Include="MercurySchool.DataAccess.Respositories" />
+    <Using Include="MercurySchool.Models" />
+    <Using Include="Microsoft.Extensions.Azure" />
+    <Using Include="System" />
+    <Using Include="System.Text" />
+    <Using Include="System.Text.Json" />
+    <Using Include="Microsoft.AspNetCore.Http.Json" />
+    <Using Include="Microsoft.AspNetCore.Mvc" />
+    <Using Include="MercurySchool.Api.Extensions" />
+  </ItemGroup>
+  
 </Project>

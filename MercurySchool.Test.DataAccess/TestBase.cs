@@ -1,19 +1,17 @@
+using MercurySchool.DataAccess.Factories;
+
 namespace MercurySchool.Test.DataAccess;
 
 public class TestBase
 {
-    //internal static IOptions<Settings> CreateSettingsOptions()
-    //{
-    //    var settings = AzureSettings;
-    //    return Options.Create(settings);
-    //}
-
     internal static Settings AzureSettings
     {
         get
         {
             var credential = new DefaultAzureCredential();
-            var appConfigEndpoint = new Uri(LocalSettings.AppConfigurationUriString!);
+
+            var uriString = GetAppConfigEndpoint();
+            var appConfigEndpoint = new Uri(uriString);
 
             IConfiguration config = new ConfigurationBuilder()
             .AddAzureAppConfiguration(options =>
@@ -21,38 +19,31 @@ public class TestBase
                 options.Connect(appConfigEndpoint, credential);
                 options.ConfigureKeyVault(vaultOptions => { vaultOptions.SetCredential(credential); });
             })
+            .AddUserSecrets("mercury-school-data-access-secrets")
             .Build();
 
-            var settings = config.GetSection("WebApp:LocalSettings").Get<Settings>();
+            var settings = config.GetSection("Settings").Get<Settings>();
+
+            if (settings is not null)
+            {
+                settings.AppConfigurationUriString = uriString;
+            }
 
             return settings!;
         }
     }
 
-    internal static Settings LocalSettings
+    internal static ISqlConnectionFactory InitializeSqlConnectionFactory()
     {
-        get
-        {
-            IConfiguration config = new ConfigurationBuilder()
-                .AddUserSecrets("mercury-school-data-access-secrets")
-                .Build();
-
-            var settings = new Settings
-            {
-                SqlDataSource = config.GetValue<string>("SqlDataSource")!,
-                SqlInitialCatalog = config.GetValue<string>("SqlInitialCatalog")!,
-                SqlPassword = config.GetValue<string>("SqlPassword")!,
-                SqlUserId = config.GetValue<string>("SqlUserId")!,
-                AppConfigurationUriString = config.GetValue<string>("AppConfigurationUriString")!
-            };
-
-            return settings;
-        }
+        return new SqlConnectionFactory(AzureSettings);
     }
 
-    internal static ISqlConnectionFactory InitializeSqlConnectionFactory(bool useAzureSettings = false)
+    internal static String GetAppConfigEndpoint()
     {
-        var settings = useAzureSettings ? AzureSettings : LocalSettings;
-        return new SqlConnectionFactory(settings);
+        IConfiguration config = new ConfigurationBuilder()
+            .AddUserSecrets("mercury-school-secrets")
+            .Build();
+
+        return config.GetValue<string>("appConfigEndpoint")!;
     }
 }
