@@ -12,10 +12,10 @@ public class PersonsServiceTests : TestBase
         var sut = InitializePersonService(personRepository);
 
         // Act
-        var result = await sut.GetPersonsAsync();
+        var result = await sut.GetPersonsAsync(null);
 
         // Assert
-        personRepository.Verify(x => x.GetPersonsAsync(), Times.Once());
+        personRepository.Verify(x => x.GetPersonsAsync(null), Times.Once());
 
         result.Should()
             .NotBeNull()
@@ -117,7 +117,7 @@ public class PersonsServiceTests : TestBase
     private static Mock<IPersonsRepository> InitializeMockPersonRepository()
     {
         var personsRespository = new Mock<IPersonsRepository>();
-        personsRespository.Setup(x => x.GetPersonsAsync()).ReturnsAsync([]);
+        personsRespository.Setup(x => x.GetPersonsAsync(null)).ReturnsAsync([]);
         personsRespository.Setup(x => x.GetPersonsAsync(It.IsAny<string>())).ReturnsAsync([]);
         personsRespository.Setup(x => x.PostPersonsAsync(It.IsAny<Person>())).ReturnsAsync(true);
         personsRespository.Setup(x => x.PutPersonsAsync(It.IsAny<Person>())).ReturnsAsync(true);

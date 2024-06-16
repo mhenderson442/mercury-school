@@ -5,17 +5,18 @@ namespace MercurySchool.Api.Services;
 public interface IPersonsService
 {
     /// <summary>
-    /// Get list of persons
+    /// Get a single person
     /// </summary>
-    /// <returns>List of type <see cref="Person">Person</see></returns>
-    Task<IList<Person>> GetPersonsAsync();
+    /// <param name="id"><see cref="Guid">Person Id</see></param>
+    /// <returns><see cref="Person">Person</see></returns>
+    Task<Person> GetPersonsAsync(Guid id);
 
     /// <summary>
     /// Get list of persons where last name starts with parameter value.
     /// </summary>
     /// <param name="startsWithValue">First letter of last name.</param>
     /// <returns>List of type <see cref="Person">Person</see></returns>
-    Task<IList<Person>> GetPersonsAsync(string startsWithValue);
+    Task<IList<Person>> GetPersonsAsync(string? startsWithValue);
 
     /// <summary>
     /// Patch property of person

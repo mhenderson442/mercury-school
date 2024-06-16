@@ -2,7 +2,7 @@
 
 internal class PersonsServiceMock : IPersonsService
 {
-    public async Task<IList<Person>> GetPersonsAsync(string startsWithValue)
+    public async Task<IList<Person>> GetPersonsAsync(string? startsWithValue)
     {
         await Task.Yield();
         var persons = InitializePersonsMock();
@@ -10,12 +10,18 @@ internal class PersonsServiceMock : IPersonsService
         return persons;
     }
 
-    public async Task<IList<Person>> GetPersonsAsync()
+    public async Task<Person> GetPersonsAsync(Guid id)
     {
         await Task.Yield();
-        var persons = InitializePersonsMock();
+        var person = new Person
+        {
+            FirstName = "First Name",
+            Id = id,
+            LastName = "LastName",
+            MiddleName = "Middle Name"
+        };
 
-        return persons;
+        return person;
     }
 
     private static Person InitializePersonMock()

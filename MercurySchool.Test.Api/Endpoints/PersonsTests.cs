@@ -1,11 +1,11 @@
-﻿using System.Xml.XPath;
+﻿using MercurySchool.Test.Api.Enpoints;
 
-namespace MercurySchool.Test.Api.Enpoints;
+namespace MercurySchool.Test.Api.Endpoints;
 
 public class PersonsTests(WebApplicationFactoryMock<Program> webApplicationFactoryMock) : EndpointTestBase(webApplicationFactoryMock), IClassFixture<WebApplicationFactoryMock<Program>>
 {
-    [Fact]
-    public async Task GetAsyncShouldReturnOk()
+    [Fact(DisplayName = "GetAsyncShould should return OK and list of persons")]
+    public async Task GetAsyncShouldReturnOkWithList()
     {
         // Arrange
         using var client = _webApplicationFactoryMock.CreateClient();
@@ -27,6 +27,30 @@ public class PersonsTests(WebApplicationFactoryMock<Program> webApplicationFacto
             .And.BeAssignableTo<List<Person>>();
     }
 
+    [Fact(DisplayName = "GetAsyncShould should return OK and person")]
+    public async Task GetAsyncShouldReturnOkWithPerson()
+    {
+        // Arrange
+        var id = Guid.NewGuid().ToString();
+        using var client = _webApplicationFactoryMock.CreateClient();
+
+        // Act
+        var result = await client.GetAsync($"/api/persons/{id}");
+
+        // Assert
+        result.Should().BeSuccessful();
+        result.Content.Should().BeAssignableTo<StreamContent>();
+
+        var options = GetJsonSerializerOptions();
+
+        var contentStream = await result.Content.ReadAsStringAsync();
+        var contentResult = JsonSerializer.Deserialize<Person>(contentStream, options);
+
+        contentResult.Should()
+            .NotBeNull()
+            .And.BeAssignableTo<Person>();
+    }
+
     [Theory]
     [InlineData("A")]
     [InlineData("B")]
@@ -38,7 +62,7 @@ public class PersonsTests(WebApplicationFactoryMock<Program> webApplicationFacto
         using var client = _webApplicationFactoryMock.CreateClient();
 
         // Act
-        var result = await client.GetAsync($"/api/persons/{startsWithValue}");
+        var result = await client.GetAsync($"/api/persons?startsWithValue={startsWithValue}");
 
         // Assert
         result.Should().BeSuccessful();

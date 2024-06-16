@@ -17,16 +17,16 @@ public class PersonsService(ILogger<PersonsService> logger, IPersonsRepository p
     }
 
     /// <inheritdoc />
-    public async Task<IList<Person>> GetPersonsAsync()
+    public async Task<Person> GetPersonsAsync(Guid id)
     {
         _logger.LogInformation("{method} was called", nameof(GetPersonsAsync));
-        var persons = await _personsRepository.GetPersonsAsync();
+        var person = await _personsRepository.GetPersonsAsync(id);
 
-        return persons;
+        return person;
     }
 
     /// <inheritdoc />
-    public async Task<IList<Person>> GetPersonsAsync(string startsWithValue)
+    public async Task<IList<Person>> GetPersonsAsync(string? startsWithValue)
     {
         _logger.LogInformation("{method} was called", nameof(GetPersonsAsync));
         var persons = await _personsRepository.GetPersonsAsync(startsWithValue);

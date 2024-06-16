@@ -2,20 +2,61 @@
 
 public class PersonsRepositoryTests : TestBase
 {
-    [Fact(DisplayName = "GetPersonsAsync should return a person")]
+    private static Guid TestPersonId => Guid.Parse("701bf36d-6874-4a99-a9f6-602fb76184bb");
+
+    [Fact(DisplayName = "GetPersonsAsync with null should return a person")]
+    public async Task GetPersonsAsyncShouldReturnPerson()
+    {
+        // Arrange
+        var sut = InitializePersonsRepository();
+
+        // Act
+        var result = await sut.GetPersonsAsync(TestPersonId);
+
+        // Assert
+        result.Should().BeAssignableTo<Person>();
+    }
+
+    [Theory(DisplayName = "DeletePersonsAsync should return value indicating success")]
+    [InlineData("Integration", "Delete", "Q")]
+    [InlineData("Integration2", "Delete2", null)]
+    public async Task DeletePersonsAsyncShouldReturnPerson(string firstName, string lastName, string? midellName)
+    {
+        // Arrange
+        var sut = InitializePersonsRepository();
+        var id = Guid.NewGuid();
+
+        var person = new Person
+        {
+            FirstName = firstName,
+            Id = id,
+            LastName = lastName,
+            MiddleName = midellName
+        };
+
+        var inserted = await sut.PostPersonsAsync(person);
+
+        // Act
+        var result = inserted && await sut.DeletePersonsAsync(id);
+
+        // Assert
+        result.Should().BeTrue();
+    }
+
+    [Fact(DisplayName = "GetPersonsAsync with null should return a list persons")]
     public async Task GetPersonsAsyncShouldReturnPersons()
     {
         // Arrange
         var sut = InitializePersonsRepository();
 
         // Act
-        var result = await sut.GetPersonsAsync();
+        var result = await sut.GetPersonsAsync(null);
 
         // Assert
         result.Should().BeAssignableTo<List<Person?>>();
     }
 
-    [Fact(DisplayName = "GetPersonsAsync with parameter should return a person")]
+    [Fact(DisplayName = "GetPersonsAsync with parameter should return a list persons")]
     public async Task GetPersonsAsyncWithParameterShouldReturnPersons()
     {
         // Arrange
@@ -103,6 +144,4 @@ public class PersonsRepositoryTests : TestBase
         var sqlConnectionFactory = InitializeSqlConnectionFactory();
         return new PersonsRepository(sqlConnectionFactory);
     }
-
-    private static Guid TestPersonId => Guid.Parse("701bf36d-6874-4a99-a9f6-602fb76184bb");
 }

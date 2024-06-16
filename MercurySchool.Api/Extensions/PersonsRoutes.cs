@@ -11,16 +11,16 @@ public static class PersonsRoutes
     /// <param name="routes"><see cref="IEndpointRouteBuilder"/>routes</param>
     public static void MapPersons(this IEndpointRouteBuilder routes)
     {
-        routes.MapGet("/api/persons", async ([FromServices] IPersonsService personsService) =>
-         await personsService.GetPersonsAsync()
+        routes.MapGet("/api/persons", async ([FromQuery(Name = "startsWithValue")] string? startsWithValue, [FromServices] IPersonsService personsService) =>
+         await personsService.GetPersonsAsync(startsWithValue)
             is IList<Person> persons
                 ? Results.Ok(persons)
                 : Results.NotFound());
 
-        routes.MapGet("/api/persons/{startsWithValue}", async (string startsWithValue, [FromServices] IPersonsService personsService) =>
-         await personsService.GetPersonsAsync(startsWithValue)
-            is IList<Person> persons
-                ? Results.Ok(persons)
+        routes.MapGet("/api/persons/{id}", async (string id, [FromServices] IPersonsService personsService) =>
+        await personsService.GetPersonsAsync(Guid.Parse(id))
+            is Person person
+                ? Results.Ok(person)
                 : Results.NotFound());
 
         routes.MapPost("/api/persons", async (Person person, [FromServices] IPersonsService personsService) =>

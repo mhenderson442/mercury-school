@@ -1,4 +1,6 @@
-﻿namespace MercurySchool.Test.Api.Enpoints;
+﻿using MercurySchool.Test.Api.Enpoints;
+
+namespace MercurySchool.Test.Api.Endpoints;
 
 public class SchoolsTests(WebApplicationFactoryMock<Program> webApplicationFactoryMock) : EndpointTestBase(webApplicationFactoryMock), IClassFixture<WebApplicationFactoryMock<Program>>
 {

@@ -1,6 +1,4 @@
 ﻿using MercurySchool.DataAccess.Factories;
-using MercurySchool.Models;
-using System.Reflection.PortableExecutable;
 
 namespace MercurySchool.DataAccess.Respositories;
 
@@ -8,17 +6,81 @@ public class PersonsRepository(ISqlConnectionFactory sqlConnectionFactory) : IPe
 {
     private readonly ISqlConnectionFactory _connectionFactory = sqlConnectionFactory;
 
-    public async Task<bool> DeletePersonsAsync(string id)
+    public async Task<bool> DeletePersonsAsync(Guid id)
     {
-        await Task.Yield();
-        throw new NotImplementedException();
+        using var sqlConnection = await _connectionFactory.CreateAsync();
+        await sqlConnection.OpenAsync();
+
+        using var sqlCommand = sqlConnection.CreateCommand();
+        sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+        sqlCommand.CommandText = "api.DeletePersons";
+        sqlCommand.Parameters.AddWithValue("@Id", id);
+
+        var result = await sqlCommand.ExecuteNonQueryAsync();
+
+        return result == 1;
     }
 
     /// <inheritdoc/>
-    public async Task<IList<Person>> GetPersonsAsync(string startsWithValue) => await GetPersonsBaseAsync(startsWithValue);
+    public async Task<IList<Person>> GetPersonsAsync(string? startsWithValue)
+    {
+        using var sqlConnection = await _connectionFactory.CreateAsync();
+        await sqlConnection.OpenAsync();
 
-    /// <inheritdoc/>
-    public async Task<IList<Person>> GetPersonsAsync() => await GetPersonsBaseAsync();
+        using var sqlCommand = sqlConnection.CreateCommand();
+        sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+        sqlCommand.CommandText = "api.GetPersons";
+
+        if (startsWithValue is not null)
+        {
+            sqlCommand.Parameters.AddWithValue("@StartsWith", startsWithValue);
+        }
+
+        using var reader = await sqlCommand.ExecuteReaderAsync();
+
+        var persons = new List<Person>();
+
+        while (await reader.ReadAsync())
+        {
+            var person = new Person
+            {
+                Id = reader.GetGuid(0),
+                FirstName = reader.GetString(1),
+                MiddleName = await reader.IsDBNullAsync(2) ? null : reader.GetString(2),
+                LastName = reader.GetString(3),
+            };
+
+            persons.Add(person);
+        }
+
+        return persons;
+    }
+
+    public async Task<Person> GetPersonsAsync(Guid id)
+    {
+        using var sqlConnection = await _connectionFactory.CreateAsync();
+        await sqlConnection.OpenAsync();
+
+        using var sqlCommand = sqlConnection.CreateCommand();
+        sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+        sqlCommand.CommandText = "api.GetPersonsWithId";
+
+        sqlCommand.Parameters.AddWithValue("@Id", id);
+
+        using var reader = await sqlCommand.ExecuteReaderAsync();
+
+        await reader.ReadAsync();
+
+        var person = new Person
+        {
+            Id = reader.GetGuid(0),
+            FirstName = reader.GetString(1),
+            MiddleName = await reader.IsDBNullAsync(2) ? null : reader.GetString(2),
+            LastName = reader.GetString(3),
+        };
+
+        return person;
+    }
 
     /// <inheritdoc/>
     public async Task<bool> PatchPersonsAsync(PatchRequest<string> patchRequest)
@@ -84,39 +146,5 @@ public class PersonsRepository(ISqlConnectionFactory sqlConnectionFactory) : IPe
         var result = await sqlCommand.ExecuteNonQueryAsync();
 
         return result == 1;
-    }
-
-    private async Task<IList<Person>> GetPersonsBaseAsync(string? startsWithValue = null)
-    {
-        using var sqlConnection = await _connectionFactory.CreateAsync();
-        await sqlConnection.OpenAsync();
-
-        using var sqlCommand = sqlConnection.CreateCommand();
-        sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
-        sqlCommand.CommandText = "api.GetPersons";
-
-        if (startsWithValue is not null)
-        {
-            sqlCommand.Parameters.AddWithValue("@StartsWith", startsWithValue);
-        }
-
-        using var reader = await sqlCommand.ExecuteReaderAsync();
-
-        var persons = new List<Person>();
-
-        while (await reader.ReadAsync())
-        {
-            var person = new Person
-            {
-                Id = reader.GetGuid(0),
-                FirstName = reader.GetString(1),
-                MiddleName = await reader.IsDBNullAsync(2) ? null : reader.GetString(2),
-                LastName = reader.GetString(3),
-            };
-
-            persons.Add(person);
-        }
-
-        return persons;
     }
 }
