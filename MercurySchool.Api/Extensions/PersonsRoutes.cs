@@ -1,4 +1,6 @@
-﻿namespace MercurySchool.Api.Extensions;
+﻿using System.Net;
+
+namespace MercurySchool.Api.Extensions;
 
 /// <summary>
 /// Person Routes
@@ -12,7 +14,7 @@ public static class PersonsRoutes
     public static void MapPersons(this IEndpointRouteBuilder routes)
     {
         routes.MapGet("/api/persons", async ([FromQuery(Name = "startsWithValue")] string? startsWithValue, [FromServices] IPersonsService personsService) =>
-         await personsService.GetPersonsAsync(startsWithValue)
+        await personsService.GetPersonsAsync(startsWithValue)
             is IList<Person> persons
                 ? Results.Ok(persons)
                 : Results.NotFound());
@@ -32,14 +34,14 @@ public static class PersonsRoutes
         routes.MapPut("/api/persons", async (Person person, [FromServices] IPersonsService personsService) =>
         await personsService.PutPersonsAsync(person)
             is true
-                ? Results.Accepted()
+                ? Results.NoContent()
                 : Results.BadRequest());
 
         routes.MapPatch("/api/persons/{id}", async (string id, HttpRequest request, [FromServices] IPersonsService personsService) =>
-            await personsService.PatchPersonsAsync(id, request.Body)
-                is true
-                    ? Results.NoContent()
-                    : Results.BadRequest());
+        await personsService.PatchPersonsAsync(id, request.Body)
+            is true
+                ? Results.NoContent()
+                : Results.BadRequest());
 
         routes.MapDelete("/api/persons/{id}", async (string id, [FromServices] IPersonsService personsService) =>
             await personsService.DeletePersonsAsync(id)

@@ -1,4 +1,6 @@
-﻿namespace MercurySchool.Api.Services;
+﻿using System.Net;
+
+namespace MercurySchool.Api.Services;
 
 /// <summary>
 /// Implementation of <see cref="IPersonsService"/>.
@@ -13,7 +15,7 @@ public class PersonsService(ILogger<PersonsService> logger, IPersonsRepository p
     public async Task<bool> DeletePersonsAsync(string id)
     {
         _logger.LogInformation("{method} was called", nameof(DeletePersonsAsync));
-        return await _personsRepository.DeletePersonsAsync(id);
+        return await _personsRepository.DeletePersonsAsync(Guid.Parse(id));
     }
 
     /// <inheritdoc />
@@ -40,12 +42,14 @@ public class PersonsService(ILogger<PersonsService> logger, IPersonsRepository p
         var content = await streamReader.ReadToEndAsync();
         var patchRequest = JsonSerializer.Deserialize<PatchRequest<string>>(content);
 
-        if (patchRequest is null)
+        if (patchRequest is null || patchRequest.Id != Guid.Parse(id))
         {
             return false;
         }
 
-        return await _personsRepository.PatchPersonsAsync(patchRequest);
+        var isUpdated = await _personsRepository.PatchPersonsAsync(patchRequest);
+
+        return isUpdated;
     }
 
     /// <inheritdoc />

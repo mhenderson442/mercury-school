@@ -51,7 +51,7 @@ public class PersonsTests(WebApplicationFactoryMock<Program> webApplicationFacto
             .And.BeAssignableTo<Person>();
     }
 
-    [Theory]
+    [Theory(DisplayName = "GetAsyncShould with parameter should return a list of persons")]
     [InlineData("A")]
     [InlineData("B")]
     [InlineData("C")]
@@ -78,7 +78,7 @@ public class PersonsTests(WebApplicationFactoryMock<Program> webApplicationFacto
             .And.BeAssignableTo<List<Person>>();
     }
 
-    [Fact]
+    [Fact(DisplayName = "PostAsync should return accepted")]
     public async Task PostAsyncWithParameterShouldReturnAccepted()
     {
         // Arrange
@@ -90,11 +90,11 @@ public class PersonsTests(WebApplicationFactoryMock<Program> webApplicationFacto
         var result = await client.PostAsJsonAsync($"/api/persons", person);
 
         // Assert
-        result.Should().BeSuccessful();
+        result.Should().HaveStatusCode(System.Net.HttpStatusCode.Accepted);
     }
 
-    [Fact]
-    public async Task PutsyncWithParameterShouldReturnAccepted()
+    [Fact(DisplayName = "PutAsync should return accepted")]
+    public async Task PutAsyncWithParameterShouldReturnAccepted()
     {
         // Arrange
         using var client = _webApplicationFactoryMock.CreateClient();
@@ -105,20 +105,18 @@ public class PersonsTests(WebApplicationFactoryMock<Program> webApplicationFacto
         var result = await client.PutAsJsonAsync($"/api/persons", person);
 
         // Assert
-        result.Should().BeSuccessful();
+        result.Should().HaveStatusCode(System.Net.HttpStatusCode.NoContent);
     }
 
-    [Fact]
+    [Fact(DisplayName = "PatchAsync should return accepted")]
     public async Task PatchAsyncWithParameterShouldReturnAccepted()
     {
         // Arrange
         using var client = _webApplicationFactoryMock.CreateClient();
 
-        var id = Guid.NewGuid();
-
         var patchItem = new PatchRequest<string>()
         {
-            Id = id,
+            Id = Guid.NewGuid(),
             PropertyName = "Test Property Name",
             PropertyValue = "Test Property Value"
         };
@@ -126,13 +124,13 @@ public class PersonsTests(WebApplicationFactoryMock<Program> webApplicationFacto
         var stringContent = new StringContent(JsonSerializer.Serialize(patchItem));
 
         // Act
-        var result = await client.PatchAsync($"/api/persons/{id}", stringContent);
+        var result = await client.PatchAsync($"/api/persons/{patchItem.Id.ToString()}", stringContent);
 
         // Assert
         result.Should().BeSuccessful();
     }
 
-    [Fact]
+    [Fact(DisplayName = "DeleteAsync should return accepted")]
     public async Task DeleteAsyncWithParameterShouldReturnAccepted()
     {
         // Arrange

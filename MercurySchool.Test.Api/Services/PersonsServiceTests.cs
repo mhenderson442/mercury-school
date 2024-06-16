@@ -109,7 +109,7 @@ public class PersonsServiceTests : TestBase
         var result = await sut.DeletePersonsAsync(It.IsAny<string>());
 
         // Assert
-        personRepository.Verify(x => x.DeletePersonsAsync(It.IsAny<string>()), Times.Once());
+        personRepository.Verify(x => x.DeletePersonsAsync(It.IsAny<Guid>()), Times.Once());
 
         result.Should().BeTrue();
     }
@@ -122,7 +122,7 @@ public class PersonsServiceTests : TestBase
         personsRespository.Setup(x => x.PostPersonsAsync(It.IsAny<Person>())).ReturnsAsync(true);
         personsRespository.Setup(x => x.PutPersonsAsync(It.IsAny<Person>())).ReturnsAsync(true);
         personsRespository.Setup(x => x.PatchPersonsAsync(It.IsAny<PatchRequest<string>>())).ReturnsAsync(true);
-        personsRespository.Setup(x => x.DeletePersonsAsync(It.IsAny<string>())).ReturnsAsync(true);
+        personsRespository.Setup(x => x.DeletePersonsAsync(It.IsAny<Guid>())).ReturnsAsync(true);
 
         return personsRespository;
     }

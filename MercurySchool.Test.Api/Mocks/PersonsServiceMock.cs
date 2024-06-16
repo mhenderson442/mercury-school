@@ -1,4 +1,7 @@
-﻿namespace MercurySchool.Test.Api.Mocks;
+﻿using MercurySchool.Models.Entities;
+using System.Net;
+
+namespace MercurySchool.Test.Api.Mocks;
 
 internal class PersonsServiceMock : IPersonsService
 {
@@ -48,6 +51,7 @@ internal class PersonsServiceMock : IPersonsService
     public async Task<bool> PostPersonsAsync(Person person)
     {
         await Task.Yield();
+
         return true;
     }
 
