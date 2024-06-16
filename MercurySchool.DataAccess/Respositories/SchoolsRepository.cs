@@ -71,7 +71,7 @@ public class SchoolsRepository(ISqlConnectionFactory sqlConnectionFactory) : ISc
 
         using var sqlCommand = sqlConnection.CreateCommand();
         sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
-        sqlCommand.CommandText = "api.UpdateSchools";
+        sqlCommand.CommandText = "api.PatchSchools";
         sqlCommand.Parameters.AddWithValue("@Id", patchRequest.Id);
         sqlCommand.Parameters.AddWithValue("@PropertyName", patchRequest.PropertyName);
         sqlCommand.Parameters.AddWithValue("@PropertyValue", patchRequest.PropertyValue);
@@ -89,7 +89,7 @@ public class SchoolsRepository(ISqlConnectionFactory sqlConnectionFactory) : ISc
 
         using var sqlCommand = sqlConnection.CreateCommand();
         sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
-        sqlCommand.CommandText = "api.InsertSchools";
+        sqlCommand.CommandText = "api.PostSchools";
         sqlCommand.Parameters.AddWithValue("@Id", school.Id);
         sqlCommand.Parameters.AddWithValue("@Name", school.Name);
         sqlCommand.Parameters.AddWithValue("@Description", school.Name);
