@@ -10,25 +10,25 @@ public class SqlConnectionSettings
     /// <summary>
     /// The SQL server
     /// </summary>
-    public required String DataSource { get; init; }
+    public required string DataSource { get; init; }
 
     /// <summary>
     /// The user name
     /// </summary>
-    public required String UserID { get; init; }
+    public required string UserID { get; init; }
 
     /// <summary>
     /// The Sql password
     /// </summary>
-    public required String Password { get; init; }
+    public required string Password { get; init; }
 
     /// <summary>
     /// The SQL Database
     /// </summary>
-    public required String InitialCatalog { get; init; }
+    public required string InitialCatalog { get; init; }
 
     /// <summary>
     /// The TrustServerCertificate setting
     /// </summary>
-    public required String TrustServerCertificate { get; init; }
+    public required bool TrustServerCertificate { get; init; }
 }

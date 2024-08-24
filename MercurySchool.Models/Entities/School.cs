@@ -25,4 +25,9 @@ public class School()
     /// </summary>
     [MaxLength(256, ErrorMessage = "Name must be between 1 and 256 characters in length")]
     public required string? Description { get; set; }
+
+    /// <summary>
+    /// Date record was created
+    /// </summary>
+    public required DateTime CreateDate { get; init; }
 }

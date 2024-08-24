@@ -3,33 +3,27 @@ using MercurySchool.DataAccess.Connections;
 using MercurySchool.Models.Settings;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
 namespace MercurySchool.DataAccess.Test.Connections;
 
-public class SqlDatabaseConnectionTests
+public class SqlDatabaseConnectionTests : TestBase
 {
     [Fact(DisplayName = "Connection method should return an instance of a SqlConnection")]
     [Trait("Category", "Integration")]
-    public void DatabaseFactoryConnectionIsNotNull()
+    public async Task DatabaseFactoryConnectionIsNotNull()
     {
         // Arrange
-        IDatabaseConnections sut = InitializeSqlDatabaseConnection();
+        IDatabaseConnections sut = await InitializeSqlDatabaseConnectionAsync();
 
         // Act
         var connection = sut.Connection;
+        connection.Open();
 
         // Assert
         connection.Should().NotBeNull().And.BeOfType<SqlConnection>();
-    }
+        connection.State.Should().Be(System.Data.ConnectionState.Open);
 
-    private static SqlDatabaseConnection InitializeSqlDatabaseConnection()
-    {
-        var configuration = new ConfigurationBuilder()
-            .AddUserSecrets<AppSettings>()
-            .Build();
-
-        return new SqlDatabaseConnection(configuration);
+        connection.Close();
     }
 }

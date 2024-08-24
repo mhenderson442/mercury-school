@@ -1,41 +1,40 @@
 ﻿using MercurySchool.Models.Settings;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System.Data;
 
 namespace MercurySchool.DataAccess.Connections;
 
-public class SqlDatabaseConnection(IConfiguration _configuration) : IDatabaseConnections
+public class SqlDatabaseConnection(IOptions<AppSettings> options) : IDatabaseConnections
 {
-    private SqlConnection? _Connection = null;
+    private SqlConnection? _connection = null;
+    private readonly SqlConnectionSettings _sqlConnectionSettings = options.Value.SqlConnectionSettings;
 
     public IDbConnection Connection
     {
         get
         {
-            if (_Connection is not null)
+            if (_connection is not null)
             {
-                return _Connection;
+                return _connection;
             }
 
             var connectionString = GetConnectionString();
-            _Connection = new SqlConnection(connectionString);
+            _connection = new SqlConnection(connectionString);
 
-            return _Connection;
+            return _connection;
         }
     }
 
     private string GetConnectionString()
     {
-        var appSettings = _configuration["AppSettings:SqlConnectionSettings:UserID"];
-
         var sqlConnnectionStringBuilder = new SqlConnectionStringBuilder
         {
-            DataSource = "localhost",
-            UserID = "api_login",
-            Password = "CtUy^17u2qXf!QmnG#RaaDqwFu5bg^W2",
-            InitialCatalog = "MercurySchool",
-            TrustServerCertificate = true,
+            DataSource = _sqlConnectionSettings.DataSource,
+            UserID = _sqlConnectionSettings.UserID,
+            Password = _sqlConnectionSettings.Password,
+            InitialCatalog = _sqlConnectionSettings.InitialCatalog,
+            TrustServerCertificate = _sqlConnectionSettings.TrustServerCertificate,
         };
 
         return sqlConnnectionStringBuilder.ConnectionString;
