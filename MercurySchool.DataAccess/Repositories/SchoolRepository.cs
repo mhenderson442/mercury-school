@@ -42,4 +42,24 @@ public class SchoolRepository(IDatabaseConnections _sqlConnection) : ISchoolRepo
 
         return result > 0;
     }
+
+    public async Task<bool> UpdateSchoolDescriptionAsync(Guid id, string description)
+    {
+        var storedProcedureName = "api.UpdateSchoolDescription";
+        var values = new { id, description };
+
+        var result = await _sqlConnection.Connection.ExecuteAsync(storedProcedureName, values, commandType: CommandType.StoredProcedure);
+
+        return result > 0;
+    }
+
+    public async Task<bool> UpdateSchoolNameAsync(Guid id, string name)
+    {
+        var storedProcedureName = "api.UpdateSchoolName";
+        var values = new { id, name };
+
+        var result = await _sqlConnection.Connection.ExecuteAsync(storedProcedureName, values, commandType: CommandType.StoredProcedure);
+
+        return result > 0;
+    }
 }

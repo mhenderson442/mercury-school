@@ -28,9 +28,25 @@ public interface ISchoolRepository
     Task<bool> InsertSchoolAsync(School school);
 
     /// <summary>
-    /// Update schoole
+    /// Update school
     /// </summary>
     /// <param name="school">Instance of a <see cref="School"/> to be update the database.</param>
     /// <returns>A <see cref="bool"/> indicating sucess of the update.</returns>
     Task<bool> UpdateSchoolAsync(School school);
+
+    /// <summary>
+    /// Update school description
+    /// </summary>
+    /// <param name="id">An inance of a <see cref="Guid"/> representing the database primary key.</param>
+    /// <param name="description">Udated school description.</param>
+    /// <returns>A <see cref="bool"/> indicating sucess of the update.</returns>
+    Task<bool> UpdateSchoolDescriptionAsync(Guid id, string description);
+
+    /// <summary>
+    /// Update school name
+    /// </summary>
+    /// <param name="id">An inance of a <see cref="Guid"/> representing the database primary key.</param>
+    /// <param name="name">Updated school name</param>
+    /// <returns>A <see cref="bool"/> indicating sucess of the update.</returns>
+    Task<bool> UpdateSchoolNameAsync(Guid id, string name);
 }
