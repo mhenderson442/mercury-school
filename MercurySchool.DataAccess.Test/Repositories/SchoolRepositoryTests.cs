@@ -38,7 +38,7 @@ public class SchoolRepositoryTests : TestBase
         result.Should().NotBeNull().And.BeAssignableTo<IEnumerable<School>>();
     }
 
-    [Fact(DisplayName = "InsertSchoolAsyncReturnsList should return a list of schools")]
+    [Fact(DisplayName = "InsertSchoolAsyncReturnsList should return a bool indicating")]
     public async Task InsertSchoolAsyncReturnsBool()
     {
         // Arrange

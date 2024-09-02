@@ -7,8 +7,4 @@ namespace MercurySchool.Models.Entities;
 /// </summary>
 public class School() : Entity
 {
-    /// <summary>
-    /// Date record was created
-    /// </summary>
-    public required DateTime CreateDate { get; init; }
 }

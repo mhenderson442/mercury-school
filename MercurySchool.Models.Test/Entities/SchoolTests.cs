@@ -5,34 +5,29 @@ namespace MercurySchool.Models.Test.Entities;
 
 public class SchoolTests
 {
-    [Theory(DisplayName = "School entity should have required properties")]
+    [Theory(DisplayName = "GetSchool entity should have required properties")]
     [InlineData(true)]
     [InlineData(false)]
     public void SchoolEntityHasRequiredProperties(bool hasNullDescription)
     {
         // Arrange
-        var sut = new School()
+        var sut = GetSchool();
+
+        if (hasNullDescription)
         {
-            Id = Guid.NewGuid(),
-            Name = "Name of School",
-            Description = hasNullDescription ? null : "Description of school"
-        };
+            sut.Description = null;
+        }
 
         // Act
         // Assert
         sut.Should().NotBeNull().And.BeAssignableTo<School>();
     }
 
-    [Fact(DisplayName = "School name should be updatable")]
+    [Fact(DisplayName = "GetSchool name should be updatable")]
     public void SchoolNameCanBeupdated()
     {
         // Arrange
-        var sut = new School()
-        {
-            Id = Guid.NewGuid(),
-            Name = "Name of School",
-            Description = "Description of school"
-        };
+        var sut = GetSchool();
 
         // Act
         sut.Name = "Upated name of school";
@@ -41,16 +36,11 @@ public class SchoolTests
         sut.Should().NotBeNull().And.BeAssignableTo<School>();
     }
 
-    [Fact(DisplayName = "School description should be updatable")]
+    [Fact(DisplayName = "GetSchool description should be updatable")]
     public void SchoolDescriptionCanBeupdated()
     {
         // Arrange
-        var sut = new School()
-        {
-            Id = Guid.NewGuid(),
-            Name = "Name of School",
-            Description = "Description of school"
-        };
+        var sut = GetSchool();
 
         // Act
         sut.Description = "Upated description of school";
@@ -58,4 +48,12 @@ public class SchoolTests
         // Assert
         sut.Should().NotBeNull().And.BeAssignableTo<School>();
     }
+
+    private static School GetSchool() => new()
+    {
+        Id = Guid.NewGuid(),
+        Name = "Name of GetSchool",
+        Description = "Description of school",
+        CreateDate = DateTime.UtcNow
+    };
 }
