@@ -2,6 +2,9 @@
 
 namespace MercurySchool.Models.Entities;
 
+/// <summary>
+/// Bases class
+/// </summary>
 public class Entity
 {
     /// <summary>

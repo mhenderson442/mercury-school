@@ -11,7 +11,7 @@ public class PersonTests
     public void SchoolEntityHasRequiredProperties(bool hasNullDescription)
     {
         // Arrange
-        var sut = GetPerson;
+        var sut = GetPerson();
 
         if (hasNullDescription)
         {
@@ -27,7 +27,7 @@ public class PersonTests
     public void SchoolNameShouldBeConcatendatedFirsAndLastNames()
     {
         // Arrange
-        var sut = GetPerson;
+        var sut = GetPerson();
 
         // Act
         var expectedName = $"{sut.FirstName} {sut.LastName}";
@@ -36,7 +36,10 @@ public class PersonTests
         sut.Name.Should().Be(expectedName);
     }
 
-    private static Person GetPerson => new()
+    // TODO: Add person patch functions
+    // TODO: Add person delete functions
+
+    private static Person GetPerson() => new()
     {
         CreateDate = DateTime.UtcNow,
         Description = "Description of school",

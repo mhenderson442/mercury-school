@@ -110,12 +110,4 @@ public class SchoolRepositoryTests : TestBase
         // Assert
         result.Should().BeTrue();
     }
-
-    private static async Task<ISchoolRepository> GetSchoolRepositoryAsync()
-    {
-        var options = await GetAppSettingsOptionsAsync();
-        IDatabaseConnections sqlConnection = new SqlDatabaseConnection(options);
-
-        return new SchoolRepository(sqlConnection);
-    }
 }

@@ -61,23 +61,4 @@ public class PersonRepositoryTests : TestBase
         // Assert
         result.Should().BeTrue();
     }
-
-    private static Person GetPerson() => new()
-    {
-        CreateDate = DateTime.UtcNow,
-        Description = "Description of school",
-        FirstName = "John",
-        Id = Guid.NewGuid(),
-        LastName = "Public",
-        MiddleName = "Q",
-        Name = "Name of person"
-    };
-
-    private static async Task<IPersonRepository> GetPersonRepositoryAsync()
-    {
-        var options = await GetAppSettingsOptionsAsync();
-        IDatabaseConnections sqlConnection = new SqlDatabaseConnection(options);
-
-        return new PersonRepository(sqlConnection);
-    }
 }
