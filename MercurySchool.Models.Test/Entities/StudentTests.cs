@@ -1,22 +1,19 @@
-﻿using MercurySchool.Models.Entities;
+﻿using FluentAssertions;
+using MercurySchool.Models.Entities;
 using Xunit;
 
 namespace MercurySchool.Models.Test.Entities;
 
-public class StudentTests
+public class StudentTests : TestBase
 {
     [Fact]
     public void StudentEntityHasRequiredPropertues()
     {
         // Arrange
-        var sut = GetStudent();
+        var sut = GetTestStudent();
 
         // Act
-
         // Assert
+        sut.StudentAcademicStatus.Should().NotBeNull();
     }
-
-    private static Student GetStudent() => new()
-    {
-    };
 }

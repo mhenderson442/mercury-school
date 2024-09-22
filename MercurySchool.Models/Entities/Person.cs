@@ -3,8 +3,13 @@
 /// <summary>
 /// An instance of a person
 /// </summary>
-public class Person : Entity
+public class Person : Entity<Guid>
 {
+    /// <summary>
+    /// Date record was created
+    /// </summary>
+    public required DateTime CreateDate { get; init; }
+
     /// <summary>
     /// The person's first name
     /// </summary>
@@ -20,6 +25,9 @@ public class Person : Entity
     /// </summary>
     public string? MiddleName { get; set; }
 
+    /// <summary>
+    /// Name of person
+    /// </summary>
     public override required string Name
     {
         get => base.Name;

@@ -76,6 +76,18 @@ public class TestBase
     }
 
     /// <summary>
+    /// Mocked instance of <see cref="IStudentAcademicStatusRespository"/>
+    /// </summary>
+    /// <returns><see cref="IStudentAcademicStatusRespository"/></returns>
+    internal static async Task<IStudentAcademicStatusRespository> GetStudentAcademicStatusRepositoryAsync()
+    {
+        var options = await GetAppSettingsOptionsAsync();
+        IDatabaseConnections sqlConnection = new SqlDatabaseConnection(options);
+
+        return new StudentAcademicStatusRespository(sqlConnection);
+    }
+
+    /// <summary>
     /// Mocked instance of <see cref="ISchoolRepository"/>
     /// </summary>
     /// <returns><see cref="ISchoolRepository"/></returns>

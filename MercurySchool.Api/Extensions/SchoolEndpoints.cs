@@ -49,20 +49,20 @@ public static class SchoolEndpoints
             : TypedResults.NotFound();
     }
 
-    public static async Task<Results<NoContent, NotFound>> PatchSchoolName(string id, Entity entity, [FromServices] ISchoolRepository schoolRepository)
+    public static async Task<Results<NoContent, NotFound>> PatchSchoolName(string id, School school, [FromServices] ISchoolRepository schoolRepository)
     {
-        entity.Id = Guid.Parse(id);
+        school.Id = Guid.Parse(id);
 
-        return await schoolRepository.UpdateSchoolNameAsync(entity.Id, entity.Name)
+        return await schoolRepository.UpdateSchoolNameAsync(school.Id, school.Name)
             ? TypedResults.NoContent()
             : TypedResults.NotFound();
     }
 
-    public static async Task<Results<NoContent, NotFound>> PatchSchoolDescription(string id, Entity entity, [FromServices] ISchoolRepository schoolRepository)
+    public static async Task<Results<NoContent, NotFound>> PatchSchoolDescription(string id, School school, [FromServices] ISchoolRepository schoolRepository)
     {
-        entity.Id = Guid.Parse(id);
+        school.Id = Guid.Parse(id);
 
-        return await schoolRepository.UpdateSchoolDescriptionAsync(entity.Id, entity.Description!)
+        return await schoolRepository.UpdateSchoolDescriptionAsync(school.Id, school.Description!)
             ? TypedResults.NoContent()
             : TypedResults.NotFound();
     }

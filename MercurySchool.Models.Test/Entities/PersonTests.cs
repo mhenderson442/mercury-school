@@ -3,15 +3,15 @@ using MercurySchool.Models.Entities;
 
 namespace MercurySchool.Models.Test.Entities;
 
-public class PersonTests
+public class PersonTests : TestBase
 {
-    [Theory(DisplayName = "GetPerson entity should have required properties")]
+    [Theory(DisplayName = "GetTestPerson entity should have required properties")]
     [InlineData(true)]
     [InlineData(false)]
-    public void SchoolEntityHasRequiredProperties(bool hasNullDescription)
+    public void PersonEntityHasRequiredProperties(bool hasNullDescription)
     {
         // Arrange
-        var sut = GetPerson();
+        var sut = GetTestPerson();
 
         if (hasNullDescription)
         {
@@ -24,10 +24,10 @@ public class PersonTests
     }
 
     [Fact(DisplayName = "Person's name property should be concatentation of first and last name")]
-    public void SchoolNameShouldBeConcatendatedFirsAndLastNames()
+    public void PersonNameShouldBeConcatendatedFirsAndLastNames()
     {
         // Arrange
-        var sut = GetPerson();
+        var sut = GetTestPerson();
 
         // Act
         var expectedName = $"{sut.FirstName} {sut.LastName}";
@@ -38,15 +38,4 @@ public class PersonTests
 
     // TODO: Add person patch functions
     // TODO: Add person delete functions
-
-    private static Person GetPerson() => new()
-    {
-        CreateDate = DateTime.UtcNow,
-        Description = "Description of school",
-        FirstName = "John",
-        Id = Guid.NewGuid(),
-        LastName = "Public",
-        MiddleName = "Q",
-        Name = "Name of person"
-    };
 }

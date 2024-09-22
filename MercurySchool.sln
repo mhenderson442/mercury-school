@@ -3,25 +3,26 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MercurySchool.Models", "MercurySchool.Models\MercurySchool.Models.csproj", "{B9FEC65E-747A-42C5-9442-CA23266E0511}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MercurySchool.Models", "MercurySchool.Models\MercurySchool.Models.csproj", "{B9FEC65E-747A-42C5-9442-CA23266E0511}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MercurySchool.Models.Test", "MercurySchool.Models.Test\MercurySchool.Models.Test.csproj", "{36F55454-31D2-4CD0-A5DF-DE8D895F7884}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MercurySchool.Models.Test", "MercurySchool.Models.Test\MercurySchool.Models.Test.csproj", "{36F55454-31D2-4CD0-A5DF-DE8D895F7884}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MercurySchool.DataAccess", "MercurySchool.DataAccess\MercurySchool.DataAccess.csproj", "{67A56C87-E15A-42DB-BF76-94B664DA1CE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MercurySchool.DataAccess", "MercurySchool.DataAccess\MercurySchool.DataAccess.csproj", "{67A56C87-E15A-42DB-BF76-94B664DA1CE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MercurySchool.DataAccess.Test", "MercurySchool.DataAccess.Test\MercurySchool.DataAccess.Test.csproj", "{3EEC9DF2-D6B5-4E0C-AA7B-3E2A24E04C32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MercurySchool.DataAccess.Test", "MercurySchool.DataAccess.Test\MercurySchool.DataAccess.Test.csproj", "{3EEC9DF2-D6B5-4E0C-AA7B-3E2A24E04C32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MercurySchool.Api.Test", "MercurySchool.Api.Test\MercurySchool.Api.Test.csproj", "{987505F8-1BD2-4E31-8F5E-21FAA84453BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MercurySchool.Api.Test", "MercurySchool.Api.Test\MercurySchool.Api.Test.csproj", "{987505F8-1BD2-4E31-8F5E-21FAA84453BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MercurySchool.Api", "MercurySchool.Api\MercurySchool.Api.csproj", "{6726ADFE-3D9E-4FC6-84B0-73F3E9A63F33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MercurySchool.Api", "MercurySchool.Api\MercurySchool.Api.csproj", "{6726ADFE-3D9E-4FC6-84B0-73F3E9A63F33}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{41601295-61DF-47A7-9D0D-32EE8969C2A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{7301BF7B-4545-45EC-A2FC-78543F5681E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B9FEC65E-747A-42C5-9442-CA23266E0511}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -48,5 +49,19 @@ Global
 		{6726ADFE-3D9E-4FC6-84B0-73F3E9A63F33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6726ADFE-3D9E-4FC6-84B0-73F3E9A63F33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6726ADFE-3D9E-4FC6-84B0-73F3E9A63F33}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B9FEC65E-747A-42C5-9442-CA23266E0511} = {41601295-61DF-47A7-9D0D-32EE8969C2A7}
+		{36F55454-31D2-4CD0-A5DF-DE8D895F7884} = {7301BF7B-4545-45EC-A2FC-78543F5681E7}
+		{67A56C87-E15A-42DB-BF76-94B664DA1CE7} = {41601295-61DF-47A7-9D0D-32EE8969C2A7}
+		{3EEC9DF2-D6B5-4E0C-AA7B-3E2A24E04C32} = {7301BF7B-4545-45EC-A2FC-78543F5681E7}
+		{987505F8-1BD2-4E31-8F5E-21FAA84453BA} = {7301BF7B-4545-45EC-A2FC-78543F5681E7}
+		{6726ADFE-3D9E-4FC6-84B0-73F3E9A63F33} = {41601295-61DF-47A7-9D0D-32EE8969C2A7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2321DB8A-8A7B-4AF0-9C33-CBE546167DAE}
 	EndGlobalSection
 EndGlobal

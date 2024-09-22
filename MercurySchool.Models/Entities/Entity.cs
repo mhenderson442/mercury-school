@@ -5,13 +5,8 @@ namespace MercurySchool.Models.Entities;
 /// <summary>
 /// Bases class
 /// </summary>
-public class Entity
+public abstract class Entity<T>
 {
-    /// <summary>
-    /// Date record was created
-    /// </summary>
-    public required DateTime CreateDate { get; init; }
-
     /// <summary>
     /// Description of entity
     /// </summary>
@@ -22,7 +17,7 @@ public class Entity
     /// Database primary key
     /// </summary>
     [Key]
-    public required Guid Id { get; set; }
+    public required T Id { get; set; }
 
     /// <summary>
     /// Name of entity
