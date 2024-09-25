@@ -14,7 +14,7 @@ public interface IPersonRepository
     /// <param name="pageSize">The number of rows to return</param>
     /// <param name="lastNameStartsWith">First letter of last name</param>
     /// <returns>An instance of <see cref="IEnumerable{T}>"/> of type Person.</returns>
-    Task<IEnumerable<Person>> GetPersons(int pageNumber, int pageSize, string? lastNameStartsWith);
+    Task<IEnumerable<Person>> GetPersonsAsync(int pageNumber, int pageSize, string? lastNameStartsWith);
 
     /// <summary>
     /// Insert new person into database

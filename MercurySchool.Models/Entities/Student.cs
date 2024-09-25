@@ -10,5 +10,8 @@ public class Student
     /// </summary>
     public required Person Person { get; init; }
 
+    /// <summary>
+    /// The student's academic status
+    /// </summary>
     public required StudentAcademicStatus StudentAcademicStatus { get; init; }
 }

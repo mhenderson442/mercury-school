@@ -8,7 +8,7 @@ namespace MercurySchool.DataAccess.Repositories;
 /// <inheritdoc>
 public class PersonRepository(IDatabaseConnections _sqlConnection) : IPersonRepository
 {
-    public async Task<IEnumerable<Person>> GetPersons(int pageNumber, int pageSize, string? lastNameStartsWith)
+    public async Task<IEnumerable<Person>> GetPersonsAsync(int pageNumber, int pageSize, string? lastNameStartsWith)
     {
         var storedProcedureName = "api.GetPersons";
         var inputParameters = new { PageNumber = pageNumber, PageSize = pageSize, LastNameStartsWith = lastNameStartsWith };

@@ -11,7 +11,7 @@ public class PersonRepositoryTests : TestBase
     [InlineData("P")]
     [InlineData("Q")]
     [InlineData(null)]
-    public async Task GetPersonsAsyncReturnsBool(string? lastNameStartsWith)
+    public async Task GetPersonsAsyncReturnsList(string? lastNameStartsWith)
     {
         // Arrange
         var sut = await GetPersonRepositoryAsync();
@@ -19,7 +19,7 @@ public class PersonRepositoryTests : TestBase
         var pageSize = 25;
 
         // Act
-        var result = await sut.GetPersons(pageNumber, pageSize, lastNameStartsWith);
+        var result = await sut.GetPersonsAsync(pageNumber, pageSize, lastNameStartsWith);
 
         // Assert
         result.Should().NotBeNull()
