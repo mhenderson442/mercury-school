@@ -1,7 +1,4 @@
-﻿using FluentAssertions;
-using MercurySchool.Models.Entities;
-
-namespace MercurySchool.Models.Test.Entities;
+﻿namespace MercurySchool.Models.Test.Entities;
 
 public class PersonTests : TestBase
 {

@@ -1,8 +1,3 @@
-using MercurySchool.Api.Extensions;
-using MercurySchool.DataAccess.Repositories;
-using MercurySchool.Models.Entities;
-using Microsoft.AspNetCore.Mvc;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.RegisterServices();

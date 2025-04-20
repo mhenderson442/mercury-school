@@ -1,7 +1,8 @@
-﻿using System.Data;
+﻿namespace MercurySchool.DataAccess.Connections;
 
-namespace MercurySchool.DataAccess.Connections;
-
+/// <summary>
+/// Interface for database connections.
+/// </summary>
 public interface IDatabaseConnections
 {
     /// <summary>

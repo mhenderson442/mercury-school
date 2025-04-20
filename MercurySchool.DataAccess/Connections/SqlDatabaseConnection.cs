@@ -1,10 +1,6 @@
-﻿using MercurySchool.Models.Settings;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Options;
-using System.Data;
+﻿namespace MercurySchool.DataAccess.Connections;
 
-namespace MercurySchool.DataAccess.Connections;
-
+/// <inheritdoc />
 public class SqlDatabaseConnection(IOptions<AppSettings> options) : IDatabaseConnections
 {
     private SqlConnection? _connection = null;

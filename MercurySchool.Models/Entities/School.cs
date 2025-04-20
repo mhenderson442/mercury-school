@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MercurySchool.Models.Entities;
+﻿namespace MercurySchool.Models.Entities;
 
 /// <summary>
 /// School

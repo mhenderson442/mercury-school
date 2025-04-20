@@ -1,6 +1,4 @@
-﻿using MercurySchool.Models.Entities;
-
-namespace MercurySchool.DataAccess.Repositories;
+﻿namespace MercurySchool.DataAccess.Repositories;
 
 /// <summary>
 /// The Person repository
@@ -21,7 +19,7 @@ public interface IPersonRepository
     /// </summary>
     /// <param name="person">Instance of a <see cref="Person"/> to be inserted into the database.</param>
     /// <returns>A <see cref="bool"/> indicating sucess of the insert.</returns>
-    Task<bool> InsertSchoolAsync(Person person);
+    Task<bool> InsertPersonAsync(Person person);
 
     /// <summary>
     /// Update person in database

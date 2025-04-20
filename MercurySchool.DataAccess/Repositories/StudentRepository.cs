@@ -1,9 +1,4 @@
-﻿using Dapper;
-using MercurySchool.DataAccess.Connections;
-using MercurySchool.Models.Entities;
-using System.Data;
-
-namespace MercurySchool.DataAccess.Repositories;
+﻿namespace MercurySchool.DataAccess.Repositories;
 
 /// <inheritdoc>
 public class StudentRepository(IDatabaseConnections _sqlConnection) : IStudentRepository

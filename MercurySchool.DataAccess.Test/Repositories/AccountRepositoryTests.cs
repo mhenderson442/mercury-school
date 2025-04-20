@@ -1,7 +1,4 @@
-﻿using FluentAssertions;
-using MercurySchool.Models.Entities;
-
-namespace MercurySchool.DataAccess.Test.Repositories;
+﻿namespace MercurySchool.DataAccess.Test.Repositories;
 
 /// <summary>
 /// AccountRepository test class

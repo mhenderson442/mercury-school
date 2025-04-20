@@ -1,8 +1,4 @@
-﻿using FluentAssertions;
-using MercurySchool.Models.Entities;
-using Xunit;
-
-namespace MercurySchool.Models.Test.Entities;
+﻿namespace MercurySchool.Models.Test.Entities;
 
 public class StudentTests : TestBase
 {

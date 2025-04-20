@@ -1,10 +1,4 @@
-﻿using MercurySchool.DataAccess.Repositories;
-using MercurySchool.Models.Entities;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using System.Data;
-
-namespace MercurySchool.Api.Extensions;
+﻿namespace MercurySchool.Api.Extensions;
 
 public static class ApplicationConfigurations
 {

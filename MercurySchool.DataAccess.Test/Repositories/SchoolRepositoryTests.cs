@@ -1,10 +1,4 @@
-﻿using FluentAssertions;
-using MercurySchool.DataAccess.Connections;
-using MercurySchool.DataAccess.Repositories;
-using MercurySchool.Models.Entities;
-using Microsoft.Identity.Client;
-
-namespace MercurySchool.DataAccess.Test.Repositories;
+﻿namespace MercurySchool.DataAccess.Test.Repositories;
 
 /// <summary>
 /// The SchoolRepository test class

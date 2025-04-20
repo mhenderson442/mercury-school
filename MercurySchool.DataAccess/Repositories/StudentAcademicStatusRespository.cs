@@ -1,8 +1,4 @@
-﻿using Dapper;
-using MercurySchool.DataAccess.Connections;
-using MercurySchool.Models.Entities;
-
-namespace MercurySchool.DataAccess.Repositories;
+﻿namespace MercurySchool.DataAccess.Repositories;
 
 public class StudentAcademicStatusRespository(IDatabaseConnections _sqlConnection) : IStudentAcademicStatusRespository
 {

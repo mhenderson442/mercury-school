@@ -6,7 +6,12 @@
 public class AppSettings
 {
     /// <summary>
-    /// Then SQL Server connection settings
+    /// The SQL Server connection settings
     /// </summary>
     public required SqlConnectionSettings SqlConnectionSettings { get; init; }
+
+    /// <summary>
+    /// Service bus settings
+    /// </summary>
+    public required ServiceBusSettings ServiceBusSettings { get; init; }
 }

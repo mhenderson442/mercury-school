@@ -1,12 +1,4 @@
-﻿using MercurySchool.DataAccess.Connections;
-using MercurySchool.DataAccess.Repositories;
-using MercurySchool.DataAccess.Test.Connections;
-using MercurySchool.Models.Entities;
-using MercurySchool.Models.Settings;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-
-namespace MercurySchool.DataAccess.Test;
+﻿namespace MercurySchool.DataAccess.Test;
 
 /// <summary>
 /// Test base class
@@ -58,30 +50,20 @@ public class TestBase
     }
 
     /// <summary>
-    /// Mocked options for depency injection.
+    /// Mocked options for dependency injection.
     /// </summary>
     /// <returns><see cref="IOptions{T}"/></returns>
     internal static async Task<IOptions<AppSettings>> GetAppSettingsOptionsAsync()
     {
         var configuration = new ConfigurationBuilder()
-        .AddUserSecrets<SqlDatabaseConnectionTests>()
-        .Build();
+            .AddUserSecrets<TestBase>()
+            .Build();
 
-        var appSettings = new AppSettings
-        {
-            SqlConnectionSettings = new SqlConnectionSettings
-            {
-                DataSource = configuration["AppSettings:SqlConnectionSettings:DataSource"]!,
-                InitialCatalog = configuration["AppSettings:SqlConnectionSettings:InitialCatalog"]!,
-                Password = configuration["AppSettings:SqlConnectionSettings:Password"]!,
-                TrustServerCertificate = Convert.ToBoolean(configuration["AppSettings:SqlConnectionSettings:TrustServerCertificate"])!,
-                UserID = configuration["AppSettings:SqlConnectionSettings:UserID"]!
-            }
-        };
+        var appSettings = configuration.GetSection("AppSettings").Get<AppSettings>();
 
-        IOptions<AppSettings> options = (IOptions<AppSettings>)Options.Create(appSettings);
-
-        return await Task.FromResult(options);
+        return appSettings is null
+            ? throw new InvalidOperationException("AppSettings configuration is missing or invalid.")
+            : await Task.FromResult(Options.Create(appSettings));
     }
 
     /// <summary>

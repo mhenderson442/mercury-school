@@ -1,9 +1,4 @@
-﻿using FluentAssertions;
-using MercurySchool.DataAccess.Connections;
-using MercurySchool.DataAccess.Repositories;
-using MercurySchool.Models.Entities;
-
-namespace MercurySchool.DataAccess.Test.Repositories;
+﻿namespace MercurySchool.DataAccess.Test.Repositories;
 
 public class PersonRepositoryTests : TestBase
 {
@@ -37,7 +32,7 @@ public class PersonRepositoryTests : TestBase
         var person = GetPerson();
 
         // Act
-        var result = await sut.InsertSchoolAsync(person);
+        var result = await sut.InsertPersonAsync(person);
 
         // Assert
         result.Should().BeTrue();

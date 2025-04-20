@@ -1,13 +1,4 @@
-﻿using FluentAssertions;
-using MercurySchool.Api.Constants;
-using MercurySchool.Models.Entities;
-using Microsoft.AspNetCore.Mvc.Testing;
-using System.Net;
-using System.Text;
-using System.Text.Json;
-using Xunit;
-
-namespace MercurySchool.Api.Test.Schools;
+﻿namespace MercurySchool.Api.Test.Schools;
 
 public class SchoolsEndpointTests
 {

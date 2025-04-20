@@ -1,7 +1,8 @@
-﻿using MercurySchool.Models.Entities;
+﻿namespace MercurySchool.DataAccess.Repositories;
 
-namespace MercurySchool.DataAccess.Repositories;
-
+/// <summary>
+/// The Student repository
+/// </summary>
 public interface IStudentRepository
 {
     /// <summary>

@@ -1,6 +1,4 @@
-﻿using MercurySchool.Models.Entities;
-
-namespace MercurySchool.DataAccess.Repositories;
+﻿namespace MercurySchool.DataAccess.Repositories;
 
 /// <summary>
 /// The school repository

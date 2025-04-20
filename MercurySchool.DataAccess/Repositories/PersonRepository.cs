@@ -1,9 +1,4 @@
-﻿using Dapper;
-using MercurySchool.DataAccess.Connections;
-using MercurySchool.Models.Entities;
-using System.Data;
-
-namespace MercurySchool.DataAccess.Repositories;
+﻿namespace MercurySchool.DataAccess.Repositories;
 
 /// <inheritdoc>
 public class PersonRepository(IDatabaseConnections _sqlConnection) : IPersonRepository
@@ -17,7 +12,7 @@ public class PersonRepository(IDatabaseConnections _sqlConnection) : IPersonRepo
         return result;
     }
 
-    public async Task<bool> InsertSchoolAsync(Person person)
+    public async Task<bool> InsertPersonAsync(Person person)
     {
         var storedProcedureName = "api.InsertPerson";
         var inputParameters = new { person.Id, person.FirstName, person.MiddleName, person.LastName, person.CreateDate };
